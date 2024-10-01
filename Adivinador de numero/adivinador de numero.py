@@ -1,3 +1,4 @@
+#Ejercicio adivinador de numero 
 
 print("Adivinador de numero")
 y=input("ingrese un numero entre 0 y 1024: ")
