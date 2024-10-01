@@ -1,4 +1,4 @@
-#Calculador de impuestos
+#ejercicio para Calcular impuestos ficticios
 
 income = float(input("Introduce el ingreso anual: ")) #Escribe ingreso anual
 
