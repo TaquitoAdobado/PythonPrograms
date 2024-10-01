@@ -4,7 +4,7 @@ y=input("ingrese un numero entre 0 y 1024: ")
 x= int(y) #Convertimos el input Y en intero y lo asignamos a la variable x
 a = 0
 b = 1024
-test = True #variable declarada como True, al pasar a false, terminara programa
+test = True #variable declarada como True, al pasar a false, terminara ciclo while
 
 if x== 0:
     print("su numero es 0, gracias por jugar")
