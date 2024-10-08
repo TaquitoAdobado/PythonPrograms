@@ -4,5 +4,5 @@ frase_nueva = "".join(frase.split()).lower()  #Se divide frase en palabras, se j
 palindromo = frase_nueva==frase_nueva[::-1]  #Se crea un flag True o False si frase_sin espacio = frase_sin_espacio alrevez
 if palindromo:      #Si palindromo es True
     print(f"La palabra o frase '{frase}' \nSI es un palindromo") #Si es True se imprime esta primera linea
-else:               #Si palindromo es Fale
+else:               #Si palindromo es False
     print(f"La palabra o frase '{frase}' \nNO es un palindromo")  #Si es False se imprime esta segunda linea
