@@ -33,5 +33,6 @@ def dias_totales(año, mes, dia):    #Se crea funcion contadora de dias transcur
     return dias_totales #Termina funcion delviendo sumatoria anterior.
     
 print(dias_totales(2024, 12, 31))   #Se invoca funcion declarando(año, mes, dia)
+#Salida = 366  // 2024 es año bisiesto por lo que  tiene 1 dia mas 
 
 #Nota de mejora: Se repitió lista dias[ ] en funcion 2 y 3, se pudo declarar fuera de las funciones y usarse como argumento.
