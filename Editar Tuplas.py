@@ -13,4 +13,4 @@ inmutable_tuple[0]= 9   #No se pueden editar elementos de la tupla
 
 
 #Salida: #AttributeError: 'tuple' object has no attribute 'append'
-#Para ver el resto de errores, ponga # al inicio de las instrucciones anteriores
+#Para ver el resto de errores, ponga # al inicio de las instrucciones anteriores a la que quiere observar (excepto la creacion de la tupla)
