@@ -17,10 +17,10 @@ tuple_3 =()
 
 tuple_4 = (5,) #Si quitamos la , tuple_4 = 5, no será una tupla, sera un valor asignado a una variable.
 #-------------------------------------------------------------------------------
-print(tuple_1)
-print(tuple_2)
-print(tuple_3)
-print(tuple_4)
+print(tuple_1)  #Salida: (1, 2, 4, 8)
+print(tuple_2)  #Salida: (1.0, 0.5, 0.25, 'hi')
+print(tuple_3)  #Salida: ()
+print(tuple_4)  #Salida: (5,)
 #-------------------------------------------------------------------------------
 
 
