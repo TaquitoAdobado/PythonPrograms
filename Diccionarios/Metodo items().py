@@ -10,3 +10,7 @@ print(dictionary.items())
 for key, value in dictionary.items():
     print(key, "->", value)
     
+#Salida:
+# one -> uno
+# two -> dos
+# three -> tres

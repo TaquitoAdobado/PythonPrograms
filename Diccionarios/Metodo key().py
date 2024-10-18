@@ -7,3 +7,11 @@ print(dictionary.keys())
 #Al tener la lista con todas las claves, se puede acceder a todo el diccionario
 for i in dictionary.keys():
     print(i, "->", dictionary[i])
+#Salida:
+# monday -> lunes
+# tuesday -> martes
+# wednesday -> miercoles
+# thursday -> jueves
+# friday -> viernes
+# saturday -> sabado
+# sunday -> domingo

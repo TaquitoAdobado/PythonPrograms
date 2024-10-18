@@ -7,3 +7,4 @@ dictionary["one"]= 1
 dictionary["two"]= 2
 dictionary["three"]= 3
 print(dictionary)
+#Salida: {'one': 1, 'two': 2, 'three': 3}
