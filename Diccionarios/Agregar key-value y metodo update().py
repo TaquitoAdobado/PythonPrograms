@@ -14,6 +14,3 @@ dictionary.update({"anxious":"ansioso"})
 print(dictionary)
 #Salida: 
 
-#-------------------------------------------------------------------------------------------------------------------------------
-
-#Para eliminar una key de un diccionario
