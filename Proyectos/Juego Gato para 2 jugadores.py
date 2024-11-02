@@ -60,7 +60,7 @@ def verify_victory(board, mark):
     #usamos tambien el parametro board ya que se ocupa la lista board y el parametro mark que será la X ó O que usará el jugador
 def player_turn (board, player, mark):
     display_board(board)   #Mostramos el tablero actualizado llamando a su funcion   
-    if draw(board) ==False: #Si aun hay casillas libres (no es empate)
+    if draw(board) ==False: #Llamando a la funcion draw, Si aun hay casillas libres (no es empate) 
         print("Es tu turno", player)  #Empezamos el turno del jugador definido al llamar a la funcion player_turn 
         while True: #Empezamos un bucle que contendrá el turno
             print(player, end="")
@@ -84,37 +84,51 @@ def player_turn (board, player, mark):
         return False    #Retornamos un False cuando NO se ejecutó el turno del jugador
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 def game(player_1, player_2):
-    juego_en_curso=True
-    while juego_en_curso:   #Mientras juego_en_curso=True el juego continua
+    game_in_progress=True
+    while game_in_progress==True:   #Mientras juego_en_curso=True el juego continua
         if player_turn(board,player_1, "X")==False:    #Si el turno del jugador NO se ejecutó, es porque es un empate.
             print("Es un empate, ganó la amistad!!!")
-            juego_en_curso = False
+            game_in_progress = False  #Variable que indica que el juego terminó
             break   #Salimos del ciclo y termina el juego
         #Si el turno del jugador Si se ejecutó continuamos a la siguiente linea.
         elif verify_victory(board, "X"):  #Si el jugador con el simbolo X cumple una condicion de victoria de la funcion verify_victory:
             print("\n El ganador es...", player_1, "!!!")  #Se imprime mensaje anunciando al ganador
-            juego_en_curso=False    
+            game_in_progress=False    #Variable que indica que el juego terminó
             break   #Salimos del bucle y termina el juego
         #Si el jugador anterior no ganó:
         elif player_turn(board, player_2, "O")==False: #Si el turno del jugador NO se ejecutó, es porque es un empate.
             print("Es un empate, ganó la amistad!!!")
-            juego_en_curso = False
+            game_in_progress = False  #Variable que indica que el juego terminó
             break   #Salimos del bucle y termina el juego
         #Si el turno del jugador Si se ejecutó continuamos a la siguiente linea.
         elif verify_victory(board, "O"):  #Si el jugador con el simbolo O cumple una condicion de victoria de la funcion verify_victory:
             print("\n El ganador es...", player_2, "!!!")  #Se imprime mensaje anunciando al ganador
-            juego_en_curso=False   
+            game_in_progress=False   #Variable que indica que el juego terminó
             break   #Salimos del bucle y termina el juego
-    return juego_en_curso
+    return game_in_progress
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-board=[[c+f*3 for c in range(1,4)] for f in range(3)]   #Se numeran casillas del tablero 3x3 del 1 al 9
+
 # Iniciamos el juego con un titulo:
 print("-----------------------------------------")
 print("Lets play TicTacToe, whats your username?")
 print("-----------------------------------------")
 
-player_1, player_2 = username_selection()
-game(player_1, player_2) #Se llama a la funcion game(), el juego iniciará y se le pedirá al jugador elegir una casilla para marcarla.
-       
-display_board(board)    #Se muestra el tablero con el resultado final
-print("JUEGO TERMINADO!")
+game_in_progress=True   #Declaramos la varibale game_in_progress como True
+while game_in_progress==True:   #Mientras game_in_progress sea True, el juego se ejecutará
+    player_1, player_2 = username_selection()   #Se ejecuta funcion para elegir usename
+    board=[[c+f*3 for c in range(1,4)] for f in range(3)]   #Se numeran casillas del tablero 3x3 del 1 al 9
+    game_in_progress=game(player_1, player_2) #Se llama a la funcion game(), el juego iniciará. Cuando termine, game_in_pogress = False
+    display_board(board)    #El juego terminó y se muestra el tablero con el resultado final
+    while game_in_progress==False:  #Al estar terminado el juego, se entra en este bucle
+        rematch=input("\n do you want to play again? (y/n): ").lower()  #Se pregunta al usuario si quiere jugar nuevamente (su respuesta se guarda en minuscula)
+        if rematch not in ["y","n"]:    #Si el usuario ingresa algo diferente a "y" o "n"
+            print("invalid response, please try again...")  #Se le avisa que ingreso una respuesta invalida, que intente de nuevo
+        elif rematch == "y":    #Si el usuario escribe y
+            game_in_progress = True #Declaramos game_in_progress como True
+            break   #Salimos del bucle (y/n) con game_in_progress= True, por lo que el bucle del juego se ejecutará nuevamente desde la solicitud de usenames
+        elif rematch == "n":    #Si el usuario escribe "n"
+            break   #Salimos del bucle (y/n) con game_in_progress=False, por lo que tambien se sale del bucle que ejecuta el juego y se imprime la siguiente linea
+print("GAME OVER!!!")   #GAME OVER!!! , finaliza el programa.
+
+
+
