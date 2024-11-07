@@ -13,4 +13,3 @@ print(dictionary)
 dictionary.update({"anxious":"ansioso"})
 print(dictionary)
 #Salida: {'happy': 'feliz', 'sad': 'triste', 'angry': 'enojado', 'bored': 'aburrido', 'anxious': 'ansioso'}
-
