@@ -9,7 +9,6 @@ print(dictionary)
 #Salida: {'happy': 'feliz', 'sad': 'triste', 'angry': 'enojado', 'bored': 'aburrido'}
 
 #Otra manera de agregar una key:value se usa el metodo .update({key:value})
-
 dictionary.update({"anxious":"ansioso"})
 print(dictionary)
 #Salida: {'happy': 'feliz', 'sad': 'triste', 'angry': 'enojado', 'bored': 'aburrido', 'anxious': 'ansioso'}
