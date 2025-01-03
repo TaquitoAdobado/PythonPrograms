@@ -6,15 +6,19 @@ root = tk.Tk()
 root.title("Button Widget")
 
 #Para crear un boton, se usa la clase 'Button' y se almacena en una variable.
-btn = tk.Button(root, text="Push me", fg="white", bg="blue", font=("Arial", 9), width=10, height=2,
+button = tk.Button(root, text="Click me", relief = "raised")
+button.pack()
+
+#Se puede editar el widget tanto como se pueda con los diferentes parametros listados mas adelante.
+btn = tk.Button(root, text="Click me too!!", fg="white", bg="blue", font=("Arial", 9), width=10, height=2,
 relief="raised", state="normal", cursor="hand2", anchor="center", justify="center",
 takefocus=True, wraplength=100, activebackground="red", activeforeground="white",
 disabledforeground="gray", highlightbackground="black", highlightcolor="yellow",
 highlightthickness=2, overrelief="sunken", repeatdelay=1000, repeatinterval=500, underline=0)
 
 btn.pack()
-
 root.mainloop()
+
 #Los parametros que se pueden usar son:
 #   - master: Es el widget padre del boton: root, frame, etc.
 #   - text: Es el texto que se muestra en el boton: "Push me".
