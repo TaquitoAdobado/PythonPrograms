@@ -15,3 +15,18 @@ for item in range (1,11):
 
 listbox.pack()
 root.mainloop()
+
+#Los diferentes parametros que se pueden utilizar en el List Box son:
+# width: Ancho del List Box.
+# height: Altura del List Box.
+# selectbackground: Color de fondo de los elementos seleccionados.
+# justify: Alineación del texto en los elementos.
+# cursor: Tipo de cursor.
+# selectmode: Modo de selección de los elementos. Puede ser single, browse, multiple, extended.
+# Para insertar elementos en el List Box, se utiliza el método insert().
+# Para obtener los elementos seleccionados, se utiliza el método curselection().
+# Para obtener el elemento seleccionado, se utiliza el método get().
+# Para borrar un elemento, se utiliza el método delete().
+# Para borrar todos los elementos, se utiliza el método delete(0, END).
+# Para obtener el número de elementos, se utiliza el método size().
+# Para obtener el índice de un elemento, se utiliza el método index().
