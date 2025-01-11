@@ -23,8 +23,8 @@ entry_password.insert(0, "Password")
 login_button=tk.Button(labelframe, text="Login", bg="lightgrey", cursor="hand2")
 
 labelframe.pack()
-entry_user.pack(pady=10)
-entry_password.pack(pady=10)
+entry_user.pack(pady=5)
+entry_password.pack(pady=5)
 login_button.pack()
 
 root.mainloop()
