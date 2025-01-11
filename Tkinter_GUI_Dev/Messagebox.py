@@ -44,4 +44,28 @@ def error():
 #Se crea el boton con etiqueta Error que detonará el mensaje de Fatal Error
 error_button=tk.Button(root, text="Error", bg="red", cursor="hand2", command=error).pack(pady=5)
 
+#-----------------------------------------------------------------------------------------------------------
+#messagebox.askyesno
+#Se crea un messagebox.askyesno el cual dara la opcion de elegir entre yes y no.
+#Yes devolverá un estado True y No uno False, que usaremos para mostrar un mnsaje
+answer_label=None #Como se usará esta variable en la funcion, debe declararse antes
+def question():
+    global answer_label
+    msgbox_answer=messagebox.askyesno("Question 1", "Is this a question?")
+
+#Si ya se tiene una etiqueta de respuesta se elimina
+    if answer_label:
+        answer_label.destroy()
+
+#Se crean etiquetas de respuesta en caso de apretar Yes o No
+    if msgbox_answer==True:
+       answer_label= tk.Label(root, text="You had clicked Yes :D")
+    else:
+        answer_label= tk.Label(root, text="You had clicked No :c")
+    answer_label.pack()
+
+#Se crea boton de Question para detonar la ventana de pregunta
+question_button=tk.Button(root, text="Question", cursor="hand2", bg="lightgreen", command=question).pack(pady=5)
+
+
 root.mainloop()
