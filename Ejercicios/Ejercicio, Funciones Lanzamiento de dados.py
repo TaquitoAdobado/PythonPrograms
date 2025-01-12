@@ -17,4 +17,6 @@ def evaluar_jugada(dado1,dado2):
         return f"La suma de tus dados es {suma_dados}. Parece una jugada ganadora"
 
 dado1,dado2=lanzamiento_dados()
-evaluar_jugada(dado1,dado2)
+print(dado1,dado2)
+print(evaluar_jugada(dado1,dado2))
+
