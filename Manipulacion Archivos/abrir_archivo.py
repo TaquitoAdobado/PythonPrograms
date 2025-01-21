@@ -10,7 +10,7 @@ Antes de poder abrir un archivo con 'print()' se tiene que usar el metodo '.read
 print(mi_archivo.read())
 
 """Siempre que se trabaje con la apertura de un archivo, no olvidar hacer el cierre del mismo al final"""
-#mi_archivo.close()
+mi_archivo.close()
 
 
 
