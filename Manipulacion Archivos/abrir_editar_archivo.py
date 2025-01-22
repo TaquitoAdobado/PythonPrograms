@@ -21,3 +21,4 @@ despues del ultimo caracter. De esta forma si agregamos algo al archivo, se agre
 
 mi_archivo_2 = open('prueba2.txt','a')
 mi_archivo_2.write("\nEstoy debajo de Hola Mundo")
+mi_archivo_2.close()
