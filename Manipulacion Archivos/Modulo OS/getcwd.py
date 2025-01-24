@@ -7,12 +7,3 @@ ruta = os.getcwd()
 print(ruta) # en mi caso C:\Users\danie\Documents\ProgramasPython\Manipulacion Archivos\Modulo OS
 
 
-
-''' C:\\Users\\danie\\Documents\\ProgramasPython\\Manipulacion Archivos\\Modulo OS\\Carpeta\\archivo.txt
-Una ruta puede tener 2 elementos:
-
-*   El nombre de base: El camino hasta llegar a donde se encuentra tu archivo.
-C:\\Users\\danie\\Documents\\ProgramasPython\\Manipulacion Archivos\\Modulo OS\\Carpeta
-*   El nombre del archivo:
-archivo.txt   '''
-
