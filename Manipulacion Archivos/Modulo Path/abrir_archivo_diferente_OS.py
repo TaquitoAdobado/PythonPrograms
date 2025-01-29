@@ -1,4 +1,4 @@
-''' Usamos el objeto Path para poder reconocer la sintaxis de las rutas de otros sistemas operativos.'''
+''' Usamos el objeto Path para poder reconocer la sintaxis de las rutas de otros sistemas operativos.   '''
 from pathlib import Path
 
 #En Path agregamos una ruta con '/' el cual es usado en OS Mac y Linux
