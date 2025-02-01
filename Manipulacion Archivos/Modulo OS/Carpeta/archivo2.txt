@@ -1,0 +1,2 @@
+Estoy dentro de la carpeta 'Carpeta' :)
+soy la copia.
