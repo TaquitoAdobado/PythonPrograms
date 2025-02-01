@@ -243,6 +243,5 @@ if __name__ == "__main__" :#asegura que el código dentro de este bloque solo se
         5: Delete_Task
         }
 
-    Load_Tasks  
     #Se ejecuta la funcion main donde entraremos en bucle hasta que el usuario decida salir del programa.
     main(menu_list, task_list)  #La cual contiene el proceso del programa.
