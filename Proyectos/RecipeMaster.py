@@ -52,13 +52,18 @@ def select_category(categories):
 
 def show_recipes(categories_rute):
     categories = show_categories(categories_rute)   #Lista de categorias
-    category_selected = select_category(categories) #Path de la categoria seleccionada
-    recipes = []    #Lista de recetas
-    number = 1  #Indice de cada receta
-    for recipe in category_selected.glob('*.txt'):
-        print(number,":",recipe.stem)
-        recipes.append(recipe.stem)
-        number += 1
+    if len(categories) == 0:
+        category_selected = 'empty'
+        recipes = []
+        return category_selected, recipes
+    else:
+        category_selected = select_category(categories) #Path de la categoria seleccionada
+        recipes = []    #Lista de recetas
+        number = 1  #Indice de cada receta
+        for recipe in category_selected.glob('*.txt'):
+            print(number,":",recipe.stem)
+            recipes.append(recipe.stem)
+            number += 1
     return category_selected, recipes   #Retorna Path a las recetas y lista de recetas
 
 def recipes_list(recipes):
@@ -79,9 +84,10 @@ def goto_menu():
 #-------------------------Menu functions-------------------------
 def read_recipe():
     category_selected, recipes = show_recipes(categories_rute)  #Path a recetas y lista de recetas
-    if len(recipes) == 0:
+    if category_selected == 'empty' or len(recipes) == 0:
         print("\nThere are no recipes yet, please create some first")
         goto_menu()
+        return
     else:
         while True:
             try:
@@ -100,27 +106,32 @@ def read_recipe():
                 print("\nInvalid answer please try again...")
 
 def create_recipe():
-    category_selected, recipes = show_recipes(categories_rute)  #Path a recetas y lista de recetas
-    while True:
-        try:
-            new_recipe = Path(category_selected, input("\nEnter the new recipe name: ") + '.txt')
-            system("cls" if os.name == "nt" else "clear")
-            new_recipe.touch(exist_ok=False)    #Si existe: FileExistsError
-            recipe_content = ""
-            print("\nIngress the recipe or type 'end' to finish:\n")
-            while True:
-                line = input()
-                if line.lower() == "end":
-                    break
-                else:
-                    recipe_content += line + "\n"
-            new_recipe.write_text(recipe_content)
-            print("\nRecipe created successfully!")
-            goto_menu()
-            return
-        except FileExistsError:
-            recipes_list(recipes)
-            print("\nRecipe already exists, please try again...")
+    category_selected, recipes = show_recipes(categories_rute)  # Path a recetas y lista de recetas
+    if category_selected == 'empty':
+        print("\nThere are no categories yet, please create some first")
+        goto_menu()
+        return
+    else:
+        while True:
+            try:
+                new_recipe = Path(category_selected, input("\nEnter the new recipe name: ") + '.txt')
+                system("cls" if os.name == "nt" else "clear")
+                new_recipe.touch(exist_ok=False)    #Si existe: FileExistsError
+                recipe_content = ""
+                print("\nIngress the recipe or type 'end' to finish:\n")
+                while True:
+                    line = input()
+                    if line.lower() == "end":
+                        break
+                    else:
+                        recipe_content += line + "\n"
+                new_recipe.write_text(recipe_content)
+                print("\nRecipe created successfully!")
+                goto_menu()
+                return
+            except FileExistsError:
+                recipes_list(recipes)
+                print("\nRecipe already exists, please try again...")
 
 def create_category():
     show_categories(categories_rute)
@@ -168,6 +179,11 @@ def delete_category():
     else:
         print("\nWhich category do you want to delete?")
         category_selected = select_category(categories)  # Path de la categoria seleccionada
+        for file in category_selected.glob('**/*'):
+            if file.is_file():
+                file.unlink()
+            elif file.is_dir():
+                file.rmdir()
         category_selected.rmdir()
         print("\nCategory deleted successfully!")
         goto_menu()
@@ -189,7 +205,7 @@ menu_options = {
     5: delete_category,
 }
 #Creacion de directorios si no existen
-categories_rute = Path(Path.home(),'RecipeMaster', 'Proyecto_Recetario/Recetas')
+categories_rute = Path(Path.home(),'RecipeMaster','Recetas')
 if not categories_rute.exists():
     categories_rute.mkdir(parents=True)
     default_categories = ['Carnes', 'Ensaladas', 'Pastas', 'Postres']
@@ -198,7 +214,9 @@ if not categories_rute.exists():
 
 #Loop principal del programa
 while True:
-    print("\nWelcome to RecipeMaster\n")
+    print("\nWelcome to RecipeMaster")
+    print("\nYou can find all your recipes in", categories_rute)
+    print("\nTotal recipes: ",len(list(categories_rute.glob('**/*.txt'))),"\n")
     show_menu(menu_list)
     user_menu_choice = select_menu_option(menu_list)
     if user_menu_choice == 6:
