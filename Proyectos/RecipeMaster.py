@@ -159,6 +159,19 @@ def delete_recipe():
                 recipes_list(recipes)
                 print("\nInvalid answer please try again...")
 
+def delete_category():
+    categories = show_categories(categories_rute)  # Lista de categorias
+    if len(categories) == 0:
+        print("\nThere are no categories yet, please create some first")
+        goto_menu()
+        return
+    else:
+        print("\nWhich category do you want to delete?")
+        category_selected = select_category(categories)  # Path de la categoria seleccionada
+        category_selected.rmdir()
+        print("\nCategory deleted successfully!")
+        goto_menu()
+        return
 #--------------------------Program code--------------------------
 menu_list = [
     "1 : Read recipe",
@@ -173,7 +186,7 @@ menu_options = {
     2: create_recipe,
     3: create_category,
     4: delete_recipe,
-    #5: delete_category,
+    5: delete_category,
 }
 #Creacion de directorios si no existen
 categories_rute = Path(Path.home(),'RecipeMaster', 'Proyecto_Recetario/Recetas')
