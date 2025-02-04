@@ -6,6 +6,7 @@ from pathlib import Path
 def show_menu(menu_list):
     for option in menu_list:
         print(option)
+
 def select_menu_option(menu_list):
     while True:
         try:
@@ -21,6 +22,7 @@ def select_menu_option(menu_list):
             system("cls" if os.name == "nt" else "clear")
             show_menu(menu_list)
             print("\nInvalid answer please try again...")
+
 def show_categories(categories_route):
     categories = []
     number=1    #Indice de cada categoria (será incremental)
@@ -30,6 +32,7 @@ def show_categories(categories_route):
             categories.append(directory)
             number+=1
     return categories   #Lista de categorias
+
 def select_category(categories):
     while True:
         try:
@@ -46,6 +49,7 @@ def select_category(categories):
             system("cls" if os.name == "nt" else "clear")
             show_categories(categories_rute)
             print("\nInvalid answer please try again...")
+
 def show_recipes(categories_rute):
     categories = show_categories(categories_rute)   #Lista de categorias
     category_selected = select_category(categories) #Path de la categoria seleccionada
@@ -56,12 +60,14 @@ def show_recipes(categories_rute):
         recipes.append(recipe.stem)
         number += 1
     return category_selected, recipes   #Retorna Path a las recetas y lista de recetas
+
 def recipes_list(recipes):
     system("cls" if os.name == "nt" else "clear")
     number = 1  # Indice de cada receta
     for recipe in recipes:
         print(number, ":", recipe)
         number += 1
+
 def goto_menu():
     while True:
         user_ret_button = input("\nPress any button to return to the menu: ").lower()
@@ -92,6 +98,7 @@ def read_recipe():
             except ValueError:
                 recipes_list(recipes)
                 print("\nInvalid answer please try again...")
+
 def create_recipe():
     category_selected, recipes = show_recipes(categories_rute)  #Path a recetas y lista de recetas
     while True:
@@ -115,6 +122,43 @@ def create_recipe():
             recipes_list(recipes)
             print("\nRecipe already exists, please try again...")
 
+def create_category():
+    show_categories(categories_rute)
+    while True:
+        try:
+            new_category = Path(categories_rute, input("\nEnter the new category name: "))
+            system('cls' if os.name == 'nt' else 'clear')
+            new_category.mkdir(exist_ok=False)  #Si existe: FileExistsError
+            print("\nCategory created successfully!")
+            goto_menu()
+            return
+        except FileExistsError:
+            show_categories(categories_rute)
+            print("\nCategory already exists, please try again...")
+
+def delete_recipe():
+    category_selected, recipes = show_recipes(categories_rute)  # Path a recetas y lista de recetas
+    if len(recipes) == 0:
+        print("\nThere are no recipes yet, please create some first")
+        goto_menu()
+    else:
+        while True:
+            try:
+                user_recipe_choice = int(input("\n Which recipe do you want to delete?: "))
+                system("cls" if os.name == "nt" else "clear")
+                if 1 <= user_recipe_choice <= len(recipes):
+                    recipe_selected = Path(category_selected, recipes[user_recipe_choice - 1] + '.txt')
+                    recipe_selected.unlink()
+                    print("\nRecipe deleted successfully!")
+                    goto_menu()
+                    return
+                else:
+                    recipes_list(recipes)
+                    print("\nOption doesn't exist please try again...")
+            except ValueError:
+                recipes_list(recipes)
+                print("\nInvalid answer please try again...")
+
 #--------------------------Program code--------------------------
 menu_list = [
     "1 : Read recipe",
@@ -127,16 +171,19 @@ menu_list = [
 menu_options = {
     1: read_recipe,
     2: create_recipe,
-    #3: create_category,
-    #4: delete_recipe,
+    3: create_category,
+    4: delete_recipe,
     #5: delete_category,
 }
+#Creacion de directorios si no existen
 categories_rute = Path(Path.home(),'RecipeMaster', 'Proyecto_Recetario/Recetas')
 if not categories_rute.exists():
     categories_rute.mkdir(parents=True)
-    default_dir = ['Carnes', 'Ensaladas', 'Pastas', 'Postres']
-    for dir in default_dir:
-        Path(categories_rute, dir).mkdir()
+    default_categories = ['Carnes', 'Ensaladas', 'Pastas', 'Postres']
+    for category in default_categories:
+        Path(categories_rute, category).mkdir()
+
+#Loop principal del programa
 while True:
     print("\nWelcome to RecipeMaster\n")
     show_menu(menu_list)
