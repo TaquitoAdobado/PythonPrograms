@@ -1,0 +1,6 @@
+5to pilar de la OOP: Abstraccion
+
+Se relaciona con ocultar toda la complejidad que algo puede tener por dentro, ofreciendo una interfaz
+con funciones de alto nivel , sencillas de usar para interactuar con la aplicacion sin tener conocimiento de
+lo que hay dentro.
+
