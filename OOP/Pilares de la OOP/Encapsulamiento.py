@@ -15,7 +15,6 @@ class Persona:
     def __metodo_oculto(self):
         print("Este metodo está oculto")
         self.__variable = 0
-        print(self.__variable)
     #Accesible desde el exterior:
     def metodo_normal(self):
         #El metodo si es accesible desde el interior
@@ -24,3 +23,6 @@ class Persona:
 alumno = Persona()
 #alumno.__metodo_oculto()   #Este metodo no es accesible desde el exterior
 alumno.metodo_normal()  #Este metodo es accesible
+
+#Un truco para acceder a los atributos y metodos ocultos es: instancia._Clase__Metodo/atributo oculto
+print(alumno._Persona__variable)    #Se declaro anteriormente como 0
