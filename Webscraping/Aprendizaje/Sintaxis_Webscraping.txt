@@ -1,0 +1,6 @@
+CARACTER    | SINTAXIS                      | DESCRIPCION
+    ''      |soup.select('div')             | Todos los elementos con la etiqueta 'div'
+    #       |soup.select('#estilo4')        | Elementos que contengan id='estilo4'
+    .       |soup.select('.columna_der')    | Elementos que contengan la clase='columna_der'
+ (espacio)  |soup.select('div span')        | Cualquier elemento llamado 'span' dentro de otro llamado 'div'
+    >       |soup.select('div>span')        | Cualquier elemento llamado 'span' dentro de 'div' sin nada en el medio.
