@@ -17,6 +17,12 @@ bg="green",font="calibri", wraplength = 500, padx=20, pady=30).pack()
 select_languaje = tk.IntVar()
 select_languaje.set(0)  #Se establece un valor por defecto que indica cual opcion estará seleccionada por defecto.
 for text, value in (["C#", 1], ["Python", 2], ["Java", 3]):
-    radio_button = tk.Radiobutton(frame, text = text, value = value, variable=select_languaje,cursor="hand2", indicatoron=0, width=10).pack()
+    radio_button = tk.Radiobutton(frame, text = text,
+                                  value = value,
+                                  variable=select_languaje,
+                                  cursor="hand2",
+                                  indicatoron=False,
+                                  width=10)
+    radio_button.pack()
 
 root.mainloop()
