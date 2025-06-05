@@ -1,0 +1,22 @@
+Lista de librerias que instalé para el proyecto:
+
+pyttsx3 - Esta libreria es la que nos va a ayudar a darle voz a nuestro programa. Le dará voz al asistente virtual.
+
+SpeechRecognition - Esta libreria nos va a ayudar a reconocer lo que nos digan el usuario. Transforma la voz del
+usuario en texto.
+
+pywhatkit - Esta libreria automatiza el acceso a la web para visitar sitios especificos (como whatsapp, youtube, etc).
+simula una interaccion humana y puede servir para enviar mensajes o hacer busquedas en la web.
+
+yfinance(Tuve error al instalar, evitaré usarla.) - Esta libreria nos ayuda a obtener informacion de la bolsa de valores
+desde yahoo finance.
+
+pyjokes - Esta libreria permite obtener informacion sobre chistes, citas, etc.
+
+pyaudio - Esta libreria nos permite interactuar con la voz del usuario.
+
+pocketsphinx - Libreria de reconocimiento de voz offline (no necesita internet)
+Se puede usar:
+user_request = recognizer.recognize_sphinx(user_audio) #Solo acepta idioma ingles por defecto.
+sustituyendo:
+user_request = recognizer.recognize_google(user_audio, language = "es-mx")
