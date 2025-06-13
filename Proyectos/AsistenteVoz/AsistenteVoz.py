@@ -93,7 +93,9 @@ def pedir_dia():
     fecha  = datetime.date.today() # Obtener la fecha actual, 2025-06-06 por ejemplo
 
     dia_semana = fecha.weekday() # Obtener el dia de la semana, 0 = lunes, 6 = domingo
-
+    dia_actual = fecha.day # Obtener el dia actual, 12 por ejemplo
+    mes_actual = fecha.month # Obtener el mes actual, 6 = junio por ejemplo
+    año_actual = fecha.year # Obtener el año actual, 2025 por ejemplo
     dias_semana = {
         0: "Lunes",
         1: "Martes",
@@ -103,9 +105,25 @@ def pedir_dia():
         5: "Sábado",
         6: "Domingo"
     }
+
+    nombre_mes = {
+        1: "Enero",
+        2: "Febrero",
+        3: "Marzo",
+        4: "Abril",
+        5: "Mayo",
+        6: "Junio",
+        7: "Julio",
+        8: "Agosto",
+        9: "Septiembre",
+        10: "Octubre",
+        11: "Noviembre",
+        12: "Diciembre"
+    }
     
     # Informar al usuario el dia de la semana actual
-    texto_a_voz(f"o, Hoy es {dias_semana[dia_semana]}") # Decir el dia de la semana actual
+    texto_a_voz(f"hmm, Hoy es {dias_semana[dia_semana]} {dia_actual} de {nombre_mes[mes_actual]} del {año_actual}") # Decir el dia de la semana actual
+
 
 def pedir_hora():
     ''' esta funcion dira la hora actual. '''
@@ -118,4 +136,62 @@ def pedir_hora():
     minutos = hora_actual.minute
 
     # Informar al usuario la hora actual
-    texto_a_voz(f"a, Ahora son las {hora} horas con {minutos} minutos")
+    texto_a_voz(f"hmm, Ahora son las {hora} horas con {minutos} minutos")
+
+
+def saludo_inicial():
+    ''' Esta funcion saluda de manera difetente al usuario dependiendo de la hora del dia. '''
+
+    # Obtener la hora actual
+    hora_actual = datetime.datetime.now()  # 2025-06-06 12:00:00 por ejemplo
+    hora = hora_actual.hour  # Obtener la hora actual, 12 por ejemplo
+
+    # Determinar el saludo dependiendo de la hora
+
+    # Saludo por la mañana
+    if 6 <= hora < 12:
+        texto_a_voz("hmm, ¡Buenos dias!, ¿en qué puedo ayudarte hoy?")
+
+    # Saludo por la tarde
+    elif 12 <= hora < 20:
+        texto_a_voz("hmm, ¡Buenas tardes!, ¿en qué puedo ayudarte hoy?")
+    
+    # Saludo por la noche
+    else:
+        texto_a_voz("hmm, ¡Buenas noches!, ¿en qué puedo ayudarte hoy?")
+
+
+def centro_de_control():
+    ''' Esta funcion es el centro de control del asistente de voz. Depende de la peticion del usuario, será la accion a realizar. '''
+    
+    running = True  # Variable para controlar el bucle principal
+
+    saludo_inicial()  # Saludo inicial al usuario
+
+    # Bucle principal del asistente de voz
+    while running:
+        pedido = audio_a_texto_online().lower()
+
+        #Seleccion de peticiones
+
+        # Si el usuario pide la hora
+        if any(palabra in pedido for palabra in [
+            "qué hora es",
+            "dime la hora",
+            "hora actual",
+            "a qué hora estamos"
+            ]):
+            pedir_hora()
+            continue
+
+        # Si el usuario pide el dia de la semana
+        elif any(palabra in pedido for palabra in [
+            "qué día es",
+            "dime el día",
+            "día de la semana",
+            "qué día de la semana es",
+            "qué día es hoy",
+            ]):
+            pedir_dia()
+            continue
+centro_de_control()
