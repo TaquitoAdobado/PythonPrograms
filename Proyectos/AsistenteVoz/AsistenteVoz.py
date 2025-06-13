@@ -104,6 +104,18 @@ def pedir_dia():
         6: "Domingo"
     }
     
+    # Informar al usuario el dia de la semana actual
     texto_a_voz(f"o, Hoy es {dias_semana[dia_semana]}") # Decir el dia de la semana actual
 
-pedir_dia()
+def pedir_hora():
+    ''' esta funcion dira la hora actual. '''
+    
+    # Obtener la fecha con hora actual
+    hora_actual = datetime.datetime.now() # 2025-06-06 12:00:00 por ejemplo
+
+    # Obtener los datos necesarios, hora y minutos.
+    hora = hora_actual.hour
+    minutos = hora_actual.minute
+
+    # Informar al usuario la hora actual
+    texto_a_voz(f"a, Ahora son las {hora} horas con {minutos} minutos")
