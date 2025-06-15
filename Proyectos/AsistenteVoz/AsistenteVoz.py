@@ -26,13 +26,13 @@ def audio_a_texto_online():
     with sr.Microphone() as source: #Microfono por defecto como fuente
         
         #Tiempo de espera para empezar a escuchar
-        recognizer.pause_threshold = 1 #Segundos
+        recognizer.pause_threshold = .5 #Segundos
 
         #Informar que inicio la grabacion
-        print( "\nEmpieza a hablar, tienes 5 segundos:\n")
+        print( "\nEmpieza a hablar, tienes 10 segundos:\n")
 
         #Guardar lo que diga el usuario
-        user_audio = recognizer.listen(source, phrase_time_limit= 5) #Limitar el tiempo de grabacion a 5 segundos   
+        user_audio = recognizer.listen(source, phrase_time_limit= 10) #Limitar el tiempo de grabacion a 10 segundos   
         
         #try/except para manejar posibles errores de entendimiento
         try:
@@ -47,28 +47,21 @@ def audio_a_texto_online():
 
         #En caso de no comprender el audio
         except sr.UnknownValueError:
+            mensaje = "Silencio o no se comprendio el audio"
+            print(mensaje)
+            return mensaje
 
-            #Prueba de que no se comprendio el audio
-            print("Oops, no entendi tu peticion")
-
-            #Devolver error
-            return "Sigue intentando"
-
-        #En caso de haber grabado el audio pero no poder transformarlo a string
+        #En caso de tener problemas de conexion a internet
         except sr.RequestError:
-            # Mensaje de prueba
-            print("Oops, tuve un error al procesar tu peticion")
-
-            # Devolver error
-            return "Sigue intentando"
+            mensaje = "No se pudo conectar al servicio de reconocimiento de voz"
+            print(mensaje)
+            return mensaje
 
         #Errores inesperados o no contemplados
         except:
-            # Mensaje de prueba
-            print("Oops, algo salió mal")
-
-            # Devolver error
-            return "Sigue intentando"
+            mensaje = "Error desconocido, intenta de nuevo"
+            print(mensaje)
+            return mensaje
         
 
 def texto_a_voz(texto):
@@ -150,48 +143,68 @@ def saludo_inicial():
 
     # Saludo por la mañana
     if 6 <= hora < 12:
-        texto_a_voz("hmm, ¡Buenos dias!, ¿en qué puedo ayudarte hoy?")
+        texto_a_voz("hmm, ¡Buenos dias!, mi nombre es elena, si necesitas algo menciona mi nombre.")
 
     # Saludo por la tarde
     elif 12 <= hora < 20:
-        texto_a_voz("hmm, ¡Buenas tardes!, ¿en qué puedo ayudarte hoy?")
+        texto_a_voz("hmm, ¡Buenas tardes!, mi nombre es elena, si necesitas algo menciona mi nombre.")
     
     # Saludo por la noche
     else:
-        texto_a_voz("hmm, ¡Buenas noches!, ¿en qué puedo ayudarte hoy?")
+        texto_a_voz("hmm, ¡Buenas noches!, mi nombre es elena, si necesitas algo menciona mi nombre.")
 
 
 def centro_de_control():
     ''' Esta funcion es el centro de control del asistente de voz. Depende de la peticion del usuario, será la accion a realizar. '''
     
-    running = True  # Variable para controlar el bucle principal
+    pedido = audio_a_texto_online().lower() # Escuchar al usuario y convertir su peticion a minusculas
 
-    saludo_inicial()  # Saludo inicial al usuario
+    #Seleccion de peticiones
 
-    # Bucle principal del asistente de voz
-    while running:
-        pedido = audio_a_texto_online().lower()
+    # Si el usuario pide la hora
+    if any(palabra in pedido for palabra in [
+        "qué hora es",
+        "dime la hora",
+        "hora actual",
+        "a qué hora estamos"
+        ]):
+        pedir_hora()
+        return
+    
+    # Si el usuario pide el dia de la semana
+    elif any(palabra in pedido for palabra in [
+        "qué día es",
+        "dime el día",
+        "día de la semana",
+        "qué día de la semana es",
+        "qué día es hoy",
+        ]):
+        pedir_dia()
+        return
+    
+    #Si el usuario saluda al asistente de voz
+    elif any(palabra in pedido for palabra in [
+        "salúdame",
+        "hola"
+    ]):
+        texto_a_voz("hmm, Hola, espero que estés teniendo un dia precioso")
+        return
+    
+    else:
+        #Si se pide algo que no se tenga contemplado
+        texto_a_voz("Lo siento, no puedo ayudarte con eso. Por favor, intenta de nuevo.")
+        return
 
-        #Seleccion de peticiones
 
-        # Si el usuario pide la hora
-        if any(palabra in pedido for palabra in [
-            "qué hora es",
-            "dime la hora",
-            "hora actual",
-            "a qué hora estamos"
-            ]):
-            pedir_hora()
-            continue
+#Programa principal
 
-        # Si el usuario pide el dia de la semana
-        elif any(palabra in pedido for palabra in [
-            "qué día es",
-            "dime el día",
-            "día de la semana",
-            "qué día de la semana es",
-            "qué día es hoy",
-            ]):
-            pedir_dia()
-            continue
-centro_de_control()
+saludo_inicial() # Saludo inicial al usuario
+
+# Bucle principal del asistente de voz
+while True:
+    llamada = audio_a_texto_online().lower() # Se escuchará al usuario hasta que diga "elena"
+    if "elena" in llamada:
+        texto_a_voz("hmmm, ¿en qué puedo ayudarte?")
+        centro_de_control() # Llamar al centro de control del asistente de voz
+    else:
+        continue
