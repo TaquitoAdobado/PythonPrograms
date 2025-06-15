@@ -8,7 +8,7 @@ Sin embargo, la opción offline solo reconoce idioma inglés.
 """
 import pyttsx3   #Para convertir texto a voz
 #import pywhatkit  #Para darle acceso a YouTube, Google, etc.
-#import pyjokes    #Para contar chistes
+import pyjokes    #Para contar chistes
 
 #import webbrowser #Para abrir paginas web
 import datetime   #Para obtener la fecha y hora actual
@@ -154,6 +154,16 @@ def saludo_inicial():
         texto_a_voz("hmm, ¡Buenas noches!, mi nombre es elena, si necesitas algo menciona mi nombre.")
 
 
+def pedir_chiste():
+    ''' Esta funcion pide un chiste al usuario. '''
+   
+    # Obtener un chiste aleatorio
+    chiste = pyjokes.get_joke(language= 'es', category= 'all')  # Obtener un chiste en español
+    
+    # Contar el chiste al usuario
+    texto_a_voz(chiste)
+
+
 def centro_de_control():
     ''' Esta funcion es el centro de control del asistente de voz. Depende de la peticion del usuario, será la accion a realizar. '''
     
@@ -190,21 +200,33 @@ def centro_de_control():
         texto_a_voz("hmm, Hola, espero que estés teniendo un dia precioso")
         return
     
+    #Si el usuario pide un chiste
+    elif any(palabra in pedido for palabra in [
+        "cuentame un chiste",
+        "dime un chiste",
+        "quiero escuchar un chiste",
+        "hazme reir",
+        "cuenta un chiste"
+    ]):
+        pedir_chiste()
+        return
+    
     else:
         #Si se pide algo que no se tenga contemplado
         texto_a_voz("Lo siento, no puedo ayudarte con eso. Por favor, intenta de nuevo.")
         return
 
 
-#Programa principal
+#-------------------Programa principal--------------------
 
-saludo_inicial() # Saludo inicial al usuario
+# Saludo inicial al usuario
+saludo_inicial() 
 
 # Bucle principal del asistente de voz
 while True:
     llamada = audio_a_texto_online().lower() # Se escuchará al usuario hasta que diga "elena"
-    if "elena" in llamada:
+    if "elena" or "helena" in llamada:
         texto_a_voz("hmmm, ¿en qué puedo ayudarte?")
         centro_de_control() # Llamar al centro de control del asistente de voz
     else:
-        continue
+        continue # Si no se menciona el nombre del asistente, se vuelve a escuchar al usuario
