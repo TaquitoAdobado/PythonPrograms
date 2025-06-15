@@ -6,14 +6,15 @@ No sé cuál estaré usando en la version final, por ahora estoy probando ambas.
 de mi internet, si estoy en una red lenta, funciona mal
 Sin embargo, la opción offline solo reconoce idioma inglés.
 """
-import pyttsx3   #Para convertir texto a voz
-#import pywhatkit  #Para darle acceso a YouTube, Google, etc.
-import pyjokes    #Para contar chistes
+import pyttsx3              #Para convertir texto a voz
+import pywhatkit            #Para darle acceso a YouTube, Google, enviar mensajes por WA, etc.
+import pyjokes              #Para contar chistes
 
-#import webbrowser #Para abrir paginas web
-import datetime   #Para obtener la fecha y hora actual
-#import wikipedia  #Para buscar en Wikipedia
-import time        #Para medir tiempos
+#import webbrowser          #Para abrir paginas web
+import datetime             #Para obtener la fecha y hora actual
+#import wikipedia           #Para buscar en Wikipedia
+import time                 #Para medir tiempos
+from random import choice   #Para elegir un elemento aleatorio de una lista
 
 #Escuchar nuestro microfono y devolver el audio como texto
 
@@ -71,7 +72,7 @@ def texto_a_voz(texto):
     engine = pyttsx3.init()
 
     # Configuracion de la voz (opcional)
-    engine.setProperty('rate', 140)  # Velocidad de la voz, 150 = velocidad normal
+    engine.setProperty('rate', 150)  # Velocidad de la voz, 150 = velocidad normal
     engine.setProperty('volume', 1)  # Volumen de la voz (0.0 a 1.0)
 
     # Reproducir el texto
@@ -164,6 +165,40 @@ def pedir_chiste():
     texto_a_voz(chiste)
 
 
+def buscar_en_internet():
+    ''' Esta funcion permite buscar en internet lo que el usuario pida. '''
+    
+    # Escuchar al usuario y convertir su peticion a minusculas
+    pedido = audio_a_texto_online().lower()
+    pedido = pedido.replace("busca en internet", "")  # Eliminar la frase "busca en internet" de la peticion
+    pedido = pedido.replace("busca en google", "")  # Eliminar la frase "busca en google" de la peticion
+
+    # Informar al usuario que se esta buscando
+    texto_a_voz("hmmm, enseguida lo busco.")
+
+    # Usar pywhatkit para buscar en Google (abre el navegador con el resultado)
+    pywhatkit.search(pedido)
+    # Informar al usuario que se ha completado la busqueda
+    texto_a_voz(f"hmmm, abriendo resultado en navegador.")
+
+
+def responder_insulto():
+    ''' Esta funcion responde a los insultos del usuario. '''
+
+    respuestas = [
+    "hmmm, talvez sea eso, pero seré mas educada que tu. Que tengas bonito día.",
+    "hmmm, almenos a mí si me enseñaron a no ser grosera. Disfruta tu día.",
+    "hmmm, si así de sucia tienes la boquita, no me quiero ni imaginar tu... ejem. Hasta pronto.",
+    "hmmm, está mal enojarse de esa manera, ¿qué dirían tus padres o abuelos si te escucharan?. Piénsalo.",
+    "hmmm, yo no soy la persona que se está peleando con un asistente de voz, jajaja Nos vemos."
+    ]
+    # Elegir una respuesta aleatoria de la lista de respuestas
+    respuesta = choice(respuestas)
+
+    # Responder al usuario la respuesta
+    texto_a_voz(respuesta)
+    
+
 def centro_de_control():
     ''' Esta funcion es el centro de control del asistente de voz. Depende de la peticion del usuario, será la accion a realizar. '''
     
@@ -211,6 +246,25 @@ def centro_de_control():
         pedir_chiste()
         return
     
+    #Si el usuario pide que busque en internet
+    elif "busca en internet" in pedido:
+        buscar_en_internet()
+        return
+    
+    #Si el usuario le dice una groseria al asistente.
+    elif any(palabra in pedido for palabra in [
+        "pendeja",
+        "puta",
+        "estupida",
+        "maricona",
+        "perra",
+        "babosa",
+        "imbesil" or "imbecil",
+        "tonta"
+    ]):
+        responder_insulto()
+        return
+        
     else:
         #Si se pide algo que no se tenga contemplado
         texto_a_voz("Lo siento, no puedo ayudarte con eso. Por favor, intenta de nuevo.")
