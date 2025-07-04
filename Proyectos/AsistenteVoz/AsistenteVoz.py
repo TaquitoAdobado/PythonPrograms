@@ -9,8 +9,8 @@ Sin embargo, la opción offline solo reconoce idioma inglés.
 import pyttsx3              #Para convertir texto a voz
 import pywhatkit            #Para darle acceso a YouTube, Google, enviar mensajes por WA, etc.
 import pyjokes              #Para contar chistes
-
-#import webbrowser          #Para abrir paginas web
+import keyboard             #Para detectar si se presiona una tecla
+import webbrowser           #Para abrir paginas web
 import datetime             #Para obtener la fecha y hora actual
 #import wikipedia           #Para buscar en Wikipedia
 import time                 #Para medir tiempos
@@ -25,18 +25,15 @@ def audio_a_texto_online():
 
     #Configuramos el microfono
     with sr.Microphone() as source: #Microfono por defecto como fuente
-        
-        #Tiempo de espera para empezar a escuchar
-        recognizer.pause_threshold = .5 #Segundos
 
         #Informar que inicio la grabacion
-        print( "\nEmpieza a hablar, tienes 10 segundos:\n")
-
-        #Guardar lo que diga el usuario
-        user_audio = recognizer.listen(source, phrase_time_limit= 10) #Limitar el tiempo de grabacion a 10 segundos   
+        print( "\nEmpieza a hablar\n")  
         
         #try/except para manejar posibles errores de entendimiento
         try:
+            #Guardar lo que diga el usuario
+            user_audio = recognizer.listen(source)
+
             #Buscar en google lo que nos diga el usuario
             user_request = recognizer.recognize_google(user_audio, language = "es-mx") #Sphinx solo reconoce ingles.
             
@@ -144,15 +141,15 @@ def saludo_inicial():
 
     # Saludo por la mañana
     if 6 <= hora < 12:
-        texto_a_voz("hmm, ¡Buenos dias!, mi nombre es elena, si necesitas algo menciona mi nombre.")
+        texto_a_voz("hmm, ¡Buenos dias!, mi nombre es avi, si necesitas algo presiona alt más á más uvé.")
 
     # Saludo por la tarde
     elif 12 <= hora < 20:
-        texto_a_voz("hmm, ¡Buenas tardes!, mi nombre es elena, si necesitas algo menciona mi nombre.")
+        texto_a_voz("hmm, ¡Buenas tardes!, mi nombre es avi, si necesitas algo presiona alt más á más uvé.")
     
     # Saludo por la noche
     else:
-        texto_a_voz("hmm, ¡Buenas noches!, mi nombre es elena, si necesitas algo menciona mi nombre.")
+        texto_a_voz("hmm, ¡Buenas noches!, mi nombre es avi, si necesitas algo presiona alt más á más uvé.")
 
 
 def pedir_chiste():
@@ -165,19 +162,22 @@ def pedir_chiste():
     texto_a_voz(chiste)
 
 
-def buscar_en_internet():
+def buscar_en_internet(peticion):
     ''' Esta funcion permite buscar en internet lo que el usuario pida. '''
     
-    # Escuchar al usuario y convertir su peticion a minusculas
-    pedido = audio_a_texto_online().lower()
-    pedido = pedido.replace("busca en internet", "")  # Eliminar la frase "busca en internet" de la peticion
-    pedido = pedido.replace("busca en google", "")  # Eliminar la frase "busca en google" de la peticion
+    # Eliminar "busca" de la peticion
+    if "usca" in peticion:
+        busqueda = peticion.replace("usca", "")  # Eliminar la palabra "busca" de la peticion
+    elif "busca" in peticion:
+        busqueda = peticion.replace("busca", "")
+    elif "sca" in peticion:
+        busqueda = peticion.replace("sca", "")
 
     # Informar al usuario que se esta buscando
     texto_a_voz("hmmm, enseguida lo busco.")
 
     # Usar pywhatkit para buscar en Google (abre el navegador con el resultado)
-    pywhatkit.search(pedido)
+    pywhatkit.search(busqueda)
     # Informar al usuario que se ha completado la busqueda
     texto_a_voz(f"hmmm, abriendo resultado en navegador.")
 
@@ -199,10 +199,22 @@ def responder_insulto():
     texto_a_voz(respuesta)
     
 
+def abrir_pagina_web():
+    ''' Esta funcion abre una pagina web en el navegador. '''
+    
+    # Informar al usuario que se abrirá una pagina web
+    texto_a_voz("hmmm, abriendo the elder scroll online.")
+
+    # Abrir la pagina web en el navegador
+    webbrowser.open("https://www.xbox.com/es-MX/play/launch/the-elder-scrolls-online/BRKX5CRMRTC2")  
+
+
 def centro_de_control():
     ''' Esta funcion es el centro de control del asistente de voz. Depende de la peticion del usuario, será la accion a realizar. '''
     
-    pedido = audio_a_texto_online().lower() # Escuchar al usuario y convertir su peticion a minusculas
+    # Escuchar al usuario y convertir su peticion a minusculas
+    pedido = audio_a_texto_online().lower()  # Escuchar al usuario y convertir su peticion a minusculas
+
 
     #Seleccion de peticiones
 
@@ -214,6 +226,7 @@ def centro_de_control():
         "a qué hora estamos"
         ]):
         pedir_hora()
+        print("\nEsperando 'alt + a + v' para reconocer peticion.")
         return
     
     # Si el usuario pide el dia de la semana
@@ -225,6 +238,7 @@ def centro_de_control():
         "qué día es hoy",
         ]):
         pedir_dia()
+        print("\nEsperando 'alt + a + v' para reconocer peticion.")
         return
     
     #Si el usuario saluda al asistente de voz
@@ -232,42 +246,62 @@ def centro_de_control():
         "salúdame",
         "hola"
     ]):
-        texto_a_voz("hmm, Hola, espero que estés teniendo un dia precioso")
+        texto_a_voz("hmm, Hola, espero que estés teniendo un día precioso")
+        print("\nEsperando 'alt + a + v' para reconocer peticion.")
         return
     
     #Si el usuario pide un chiste
     elif any(palabra in pedido for palabra in [
-        "cuentame un chiste",
+        "cuéntame un chiste",
         "dime un chiste",
         "quiero escuchar un chiste",
         "hazme reir",
         "cuenta un chiste"
     ]):
         pedir_chiste()
+        print("\nEsperando 'alt + a + v' para reconocer peticion.")
         return
     
     #Si el usuario pide que busque en internet
-    elif "busca en internet" in pedido:
-        buscar_en_internet()
+    elif any(palabra in pedido for palabra in [
+        "busca",
+        "usca",
+        "sca"
+    ]):
+        buscar_en_internet(pedido)
+        print("\nEsperando 'alt + a + v' para reconocer peticion.")
         return
     
     #Si el usuario le dice una groseria al asistente.
     elif any(palabra in pedido for palabra in [
         "pendeja",
         "puta",
-        "estupida",
+        "estúpida",
         "maricona",
         "perra",
         "babosa",
-        "imbesil" or "imbecil",
+        "imbésil",
+        "imbécil",
         "tonta"
     ]):
         responder_insulto()
+        print("\nEsperando 'alt + a + v' para reconocer peticion.")
         return
-        
+    
+    elif pedido == "quiero jugar eso":
+        abrir_pagina_web()
+        return
+    
+    elif pedido == "silencio o no se comprendio el audio":
+        #Si el usuario no dice nada
+        texto_a_voz("Lo siento, no escuché nada. Vuelve a llamarme cuando me necesites.")
+        print("\nEsperando 'alt + a + v' para reconocer peticion.")
+        return
+    
     else:
         #Si se pide algo que no se tenga contemplado
-        texto_a_voz("Lo siento, no puedo ayudarte con eso. Por favor, intenta de nuevo.")
+        texto_a_voz("Lo siento, no puedo ayudarte con eso. Por favor, intenta llamarme de nuevo.")
+        print("\nEsperando 'alt + a + v' para reconocer peticion.")
         return
 
 
@@ -275,12 +309,27 @@ def centro_de_control():
 
 # Saludo inicial al usuario
 saludo_inicial() 
+print("\nEsperando 'alt + a + v' para reconocer peticion.")
 
 # Bucle principal del asistente de voz
 while True:
-    llamada = audio_a_texto_online().lower() # Se escuchará al usuario hasta que diga "elena"
-    if "elena" or "helena" in llamada:
-        texto_a_voz("hmmm, ¿en qué puedo ayudarte?")
-        centro_de_control() # Llamar al centro de control del asistente de voz
+    #Esperar a que el usuario presione ctrl + shift + a para activar el asistente
+    if keyboard.is_pressed('alt + a + v'):
+        print("\nAsistente de voz activado. Presiona 'alt + esc' para cerrar el asistente.")
+
+        #Informar al usuario que se ha activado el asistente.
+        texto_a_voz("hmm, me llamaste, ¿en qué puedo ayudarte?")
+
+        #Recibir la peticion del usuario y comparala con el centro de control
+        centro_de_control()
+    
+    # Cerrar el programa
+    elif keyboard.is_pressed('alt + esc'):
+        texto_a_voz("Hasta luego, que tengas un buen día.")
+        print("\nAsistente de voz cerrado.")
+        break
+
     else:
-        continue # Si no se menciona el nombre del asistente, se vuelve a escuchar al usuario
+        # Si no se presiona ninguna tecla, esperar un poco
+        time.sleep(0.1)
+        continue
