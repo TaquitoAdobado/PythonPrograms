@@ -20,3 +20,5 @@ Se puede usar:
 user_request = recognizer.recognize_sphinx(user_audio) #Solo acepta idioma ingles por defecto.
 sustituyendo:
 user_request = recognizer.recognize_google(user_audio, language = "es-mx")
+
+keyboard - Libreria para reconocer una combinacion de teclas para activar al asistente de voz.
