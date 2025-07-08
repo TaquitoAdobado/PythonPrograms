@@ -8,7 +8,7 @@ usuario en texto.
 pywhatkit - Esta libreria automatiza el acceso a la web para visitar sitios especificos (como whatsapp, youtube, etc).
 simula una interaccion humana y puede servir para enviar mensajes o hacer busquedas en la web.
 
-yfinance(Tuve error al instalar, evitaré usarla.) - Esta libreria nos ayuda a obtener informacion de la bolsa de valores
+yfinance(Tuve error al instalar, se eliminó) - Esta libreria nos ayuda a obtener informacion de la bolsa de valores
 desde yahoo finance.
 
 pyjokes - Esta libreria permite obtener informacion sobre chistes, citas, etc.
@@ -20,5 +20,3 @@ Se puede usar:
 user_request = recognizer.recognize_sphinx(user_audio) #Solo acepta idioma ingles por defecto.
 sustituyendo:
 user_request = recognizer.recognize_google(user_audio, language = "es-mx")
-
-keyboard - Libreria para reconocer una combinacion de teclas para activar al asistente de voz.
