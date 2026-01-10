@@ -1,0 +1,2 @@
+Para que funcione flask se debe instalar su libreria mediante:
+pip install flask
