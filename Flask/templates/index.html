@@ -1,0 +1,85 @@
+<!-- Le dice al navegador que es un documento HTML5 -->
+<!DOCTYPE html>
+
+<!--Etiqueta html indica "aqui empieza mi pagina", lang indica el idioma principal del contenido -->
+<html lang="es"> 
+
+<!-- La sección head contiene metadatos, el titulo, enlaces a recursos, estilos y scripts. 
+ Preparan la pagina antes de mostrar el contenido en <body>.
+ Indican al navegador, a los buscadores y a otros sistemas como interpretar la pagina. -->
+<head>
+    <!-- Metaetiquetas -->
+    <!-- charset: Define la codificación de caracteres para el documento-->
+    <meta charset="UTF-8"> <!-- UTF-8 estandar que soporta casi todos los caracteres y simbolos del mundo(acentos, ñ, emojis, alfabetos no latinos)-->
+
+    <!-- name="viewport": Esta meta etiqueta controla como se ajusta la pagina a la pantalla. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- content: Reglas que debe aplicar el navegador para que name funcione.  
+        width=device-width: Ancho = Ancho de pantalla
+        initial-scale=1.0 indica la escala inicial de zoom ejemplo:
+            1.0 - 100% (sin zoom)
+            2.0 - 200% (pagina ampliada al doble)
+            0.5 - 50% (pagina reducida a la mitad) -->
+
+    <!-- title: Define el titulo de la pagina, mostrado en:
+     pestaña del navegador
+     resultado de busqueda (enlace azul)
+     nombre que aparece al guardar en favoritos -->
+    <title>Flask App</title>
+
+    <!-- <link> sirve para enlazar recursos pasivos (que no se ejecutan, solo se usan), como hojas de estilo(css), iconos, o fuentes.
+    Forma estatica (indicando la ruta donde se encuentra) -->
+    <!--
+    <link rel="stylesheet" href="/static/styles.css">
+    -->
+        <!-- rel(relacion)
+            "stylesheet" indica que estamos relacionando una hoja de estilo(css)
+            href(referencia de hypertexto), atributo que indica la ruta del recurso a enlazar   -->
+
+    <!-- Forma dinamica usando url_for (se contruye la ruta automaticamente)-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <!-- forma dinamica de interpretar codigo en Jinja2 (motor de plantillas de Flask).
+        Lo que esta dentro se evalua en el servidor y se reemplaza por el resultado --> 
+        <!-- url_for(): construye automaticamente la URL
+            'static': endpoint, indica el nombre del directorio donde encontrar el archivo
+            filename='styles.css': indica el nombre del archivo a encontrar -->
+    
+    <!-- <script> </script> Sirve para enlazar recursos activos (codigo que se ejecuta), como codigo Javascript -->
+    <script src="{{url_for('static', filename='script.js')}}"> </script>
+        <!-- src (source) atributo que indica la ruta, en este caso de forma dinamica como en link -->
+
+<!-- Cerramos el head-->
+</head>
+
+<!-- <body> Contiene el contenido visible de la pagina web -->
+<body>
+
+    <!-- <header> Encabezado de la pagina, puede incluir un titulo, una imagen, un logo, un menu. -->
+    <header>
+
+        <!-- <h1> Titulo principal de la pagina -->
+        <h1>Mi servidor web Flask</h1>
+
+    <!-- Cerramos encabezado -->    
+    </header>
+
+    <!-- <main> Contenido principal de la pagina. SOLO PUEDE HABER 1 <main> -->
+    <main>
+
+        <!-- <p> Parrafo de texto, se debe indicar su fin </p> -->
+        <p>Bienvenido a mi pagina web con Flask. </p>
+        <p>Hola mundo!</p>
+     
+    <!-- Cerramos main -->
+    </main>
+
+    <!-- <footer> Pie de pagina, contiene informacion adicional como derechos de autor, enlaces secundarios, informacion de contacto -->
+    <footer>
+        <p>&copy; 2026 Mi servidor Flask</p>
+
+    <!-- Cerramos footer -->
+    </footer>
+
+<!-- Cerramos body -->
+</body>
+</html>
