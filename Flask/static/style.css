@@ -1,0 +1,44 @@
+/*Este archivo contiene los estilos CSS que se usaran en los templates.html de la aplicacion Flask. */
+
+/* ===========================
+   Estilos globales
+   =========================== */
+html, body {
+    font-family: Arial, sans-serif;   /* Tipografía principal */
+    background-color: #b9b9b9;      /* Fondo gris claro */
+    margin: 0;                        /* Sin margen por defecto */
+    padding: 20px;                    /* Espaciado interno */
+    height: 100%;                     /* El documento ocupa toda la pantalla */
+    display: flex;                    /* flex es un modelo de diseño flexible */
+    flex-direction: column;           /* Los elementos se organizan en columna */
+}
+
+/* ===========================
+   Encabezado
+   =========================== */
+main {
+    flex: 1;                          /* El main ocupa el espacio disponible */
+}
+
+/* ===========================
+   Títulos y párrafos
+   =========================== */
+h1 {
+    color: #130884;                   /* Azul oscuro */
+    text-align: center;                 /* Centrado */
+    margin-bottom: 20px;                /* Espacio debajo */
+}
+
+p {
+    color: #000000;                   /* Negro */
+    line-height: 1.6;                   /* Espaciado entre líneas */
+}
+
+/* ===========================
+   Pie de página
+   =========================== */
+footer {
+    padding: 10px;
+    text-align: center;
+
+}
