@@ -19,3 +19,11 @@ def template_example():
 #Finalmente, ejecutamos la aplicacion Flask.
 if __name__ == '__main__':
     app.run(debug=True, port = 5000, host = '0.0.0.0')
+
+
+'''
+Flask por defecto sabe que los templates se encuentran en la carpeta templates/
+Si por algun motivo cambiamos el nombre de esa carpeta, para que flask pueda encontrarlos debemos agregarlo al crear la instancia.
+Ejemplo, la carpeta templates se renombra a plantillas:
+app = Flask(__name__, template_folder="plantillas")
+'''
