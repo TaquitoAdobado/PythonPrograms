@@ -1,0 +1,5 @@
+Para que funcione flask se debe instalar su libreria mediante:
+pip install flask
+
+Un proyecto Flask debe tener la carpeta static en la cual se guardan los archivos estaticos (css, js, imagenes).
+Tambien debe tener la carpeta templates en la cual se guardan los archivos html.
