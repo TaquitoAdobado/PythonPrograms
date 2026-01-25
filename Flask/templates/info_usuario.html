@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informacion/{{usuario.username}}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</head>
+<body>
+    <header>
+        <h1>Informacion de<span style="color:red"> {{ usuario.username }}.</span></h1>
+    </header>
+    <main>
+        <h2>Datos:</h2>
+        <ul>
+            <li>Nombre: {{ usuario.nombre }}</li>
+            <li>Apellido: {{ usuario.apellido }}</li>
+            <li>Edad: {{ usuario.edad }}</li>
+            <li>Sexo: {{ usuario.sexo }}</li>
+        </ul>
+    </main>
+    <footer>
+        <p>Pagina de prueba, datos no reales mostrados.</p>
+    </footer>
+</body>
+</html>
