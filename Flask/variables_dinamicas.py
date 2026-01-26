@@ -49,18 +49,20 @@ def info_usuario(usuario):
             Edad: 31
             Sexo: Masculino
     '''
-    usuario_crudo = usuario # Guardamos el nombre de usuario tal cual fue capturado para usarlo en mensajes de error.
-    usuario = usuario.lower() # Convertimos el nombre de usuario a minusculas para hacer la busqueda normalizada.
+    # Guardamos el nombre de usuario tal cual fue capturado para usarlo en mensajes de error.
+    usuario_crudo = usuario
+    # Normalizamos el nombre a minusculas para buscar en el diccionario.
+    usuario = usuario.lower() 
     # Obtenemos los datos del nombre de usuario capturado en la URL.
     datos = datos_usuarios.get(usuario)
     #Si el usuario existe, renderizamos la plantilla con sus datos.
     if datos:
         return render_template('info_usuario.html', usuario = datos)
-        #key=usuario: nombre del usuario capturado en la URL.
-        #usuario=datos: diccionario con los datos del usuario.
+        #usuario=datos: usuario ahora es el diccionario con los datos del usuario.
         
     #Si el usuario no existe, mostramos un mensaje de error.
     else:
+        #Usamos usuario_crudo para mostrar el nombre tal cual fue capturado.
         return f'<h1><span style="color:red">ERROR:</span>Usuario {usuario_crudo} no registrado.</h1>'
     
     #NOTA: Asegurarse de tener la plantilla info_usuario.html en la carpeta templates.
