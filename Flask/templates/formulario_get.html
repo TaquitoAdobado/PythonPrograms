@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Búsqueda</title>
+</head>
+<body>
+    <h1>Formulario de Búsqueda</h1>
+
+    <!-- form es la etiqueta para crear formularios en HTML -->
+    <form action="/get" method="GET">
+        <!-- action: ruta a donde se enviaran los datos del formulario -->
+         <!-- method: metodo de envio, puede ser GET o POST
+            GET: usado normalmente para busquedas, filtros o consultas. Refleja los datos en la URL.
+            POST: Usado para enviar datos sensibles, formularios, login. No refleja los datos en la URL. -->
+    
+    <!-- label: etiqueta para asociar un elemento del formulario -->
+        <label for="usuario">Usuario</label>
+            <!-- for: aqui colocamos el id del input para asociar la etiqueta -->
+        
+    <!-- input: etiqueta para crear campos de entrada -->
+        <!-- type: tipo de entrada, ejemplos mas adelante. -->
+        <!-- id: identificador para asociar la etiqueta -->
+        <!-- nombre: nombre del parametro con el dato enviado al servidor -->
+        <!-- placeholder: texto que aparece dentro del campo de entrada -->
+        <input type='text' id="usuario" name="usuario" placeholder="TaquitoExample">
+        <input type='submit' value="Enviar">
+    </form>
+</body>
+</html>
