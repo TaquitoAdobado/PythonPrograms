@@ -23,74 +23,10 @@
         <!-- type: tipo de entrada, ejemplos mas adelante. -->
         <!-- id: identificador para asociar la etiqueta -->
         <!-- nombre: nombre del parametro con el dato enviado al servidor -->
+        <!-- placeholder: texto mostrado mientras el campo este vacio -->
         <!-- required: define un campo obligatorio (parametro opcional)-->
         <input type='text' id="usuario" name="usuario" placeholder="TaquitoExample" required>
         <input type='submit' value="Enviar">
     </form>
 </body>
 </html>
-
-<!-- Los diferentes tipos de entradas que hay son:
-
-    - text: Caja de texto libre (letras, números, símbolos).
-        <input type="text" name="nombre" placeholder="Tu nombre">
-            name: nombre del parametro que se enviara al servidor con los datos introducidos.
-            placeholder: texto que se muestra mientras el campo este vacio. (opcional)
-
-    - search: Igual que text, pero incluye una "X" para borrar el contenido.
-
-    - number: Solo acepta números, con flechas para subir/bajar (en pc).
-
-    - tel: Caja de texto que valida formato de numero telefonico.
-
-    - password: Caja de texto que oculta lo que se escribe.
-
-    - email: Caja de texto que valida que el formato sea de correo electrónico.
-
-    - url: Caja de texto que valida que el formato sea de URL.
-
-    - checkbox: Casilla de verificación, puede haber varias seleccionadas.
-
-    - radio: Botones de opción, solo puede haber una seleccionada en un grupo.
-
-    - submit: Boton para enviar el formulario.
-        <input type="submit" value="Enviar">
-            value: texto dentro el boton.
-        
-    - image: Igual que submit, pero con una imagen, adicionalmente se envian las coordenadas del clic.
-        <input type="image" src="ruta_de_la_imagen" alt="Enviar">
-            alt: texto alternativo si la imagen no carga.
-
-    - reset: Boton para reiniciar los campos del formulario a sus valores iniciales.
-        <input type="reset" value="Reiniciar">
-            value: texto dentro el boton.
-    
-    - file: Campo para subir archivos.
-        <input type="file" name="archivo">
-    
-    - date: Selector de fecha.
-
-    - time: Selector de hora.
-
-    - datetime-local: Selector de fecha y hora local.
-
-    -month: Selector de mes y año.
-
-    - week: Selector de semana y año.
-
-    - color: Selector de color.
-
-    - range: Selector deslizante para un rango de valores.
-        <input type="range" name="volumen" min="0" max="100" step="1">
-            min: valor minimo.
-            max: valor maximo.
-            step: incremento entre valores.
-    
-    - hidden: Campo oculto que no se muestra al usuario, pero se envia con el formulario con un valor predefinido.
-        <input type="hidden" name="token" value="12345">
-            value: valor predefinido que se enviara.
-    
-    - button: Boton generico sin funcion predefinida, se usa con Javascript.
-        <input type="button" value="Clicame">
-            value: texto dentro el boton.
--->
