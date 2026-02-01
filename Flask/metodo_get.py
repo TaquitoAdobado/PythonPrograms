@@ -1,5 +1,6 @@
-#GET: Se usa para solicitar datos al servidor.
+#GET: Se usa principalmente para solicitar datos al servidor.
 #Envia una solicitud al servidor con datos reflejados en la URL y el servidor responde con los datos solicitados.
+#Es idempotente: pedir lo mismo varias veces no debería cambiar nada en el servidor.
 
 #Para poder usar estos metodos, se debe importar request desde flask.
 from flask import Flask, render_template, request
