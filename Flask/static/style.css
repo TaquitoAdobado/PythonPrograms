@@ -14,7 +14,7 @@ html, body {
 }
 
 /* ===========================
-   Encabezado
+    Contenedor principal
    =========================== */
 main {
     flex: 1;                          /* El main ocupa el espacio disponible */
@@ -40,5 +40,18 @@ p {
 footer {
     padding: 10px;
     text-align: center;
+}
+
+
+/* ===========================
+   Formularios y etiquetas
+   =========================== */
+form div {
+    margin-bottom: 10px;                /* agrega espacio debajo de cada bloque <div> del formulario */
+}
+
+label {
+    display: block;                     /* hace que cada label ocupe toda la línea */
+    margin-bottom: 10px;
 
 }
