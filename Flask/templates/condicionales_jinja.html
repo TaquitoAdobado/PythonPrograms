@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width = device-width, initial-scale=1.0">
+        <title>Condicionales Jinja</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+        <script src="{{url_for('static', filename='script.js')}}"></script>
+    </head>
+    <body>
+        <!-- Condicionales en Jinja2 -->
+
+        <!-- En este caso la logica se esta realizando aqui en el .html pero como buena practica, es mejor que
+         esa logica se realice desde el servidor (Python) -->
+
+        <!-- Si se usa el url con el parametro edad -->
+        {% if edad is defined %}
+        <!-- Condicional con if -->
+            <header>
+                <h1>Condicional if <br>Jinja2</h1>
+            </header>
+            <h2>Edad: {{ edad }}</h2>
+            {% if edad >= 18 %}
+                <p>Es mayor de edad.</p>
+            {% else %}
+                <p>Es menor de edad.</p>
+            {% endif %}
+        
+        <!-- Si se usa el url con el parametro numero -->
+        {% elif numero is defined %}
+        <!-- Condicional con for -->
+            <header>
+                <h1>Condicional for <br>Jinja2</h1>
+                <h2>Numero en la URL: {{ numero }}</h2>
+                <ul>
+                {% for num in range(numero) %}
+                    <!-- loop.index muestra el indice actual (empezando desde 1)-->
+                    <li>{{ loop.index }}</li>
+                {% endfor %}
+                </ul>
+            </header>
+        {% endif %}
+    </body>
+</html>
