@@ -1,0 +1,47 @@
+<!-- En este HTML se usaran los comandos extends e include. 
+HTML asociados: footer.html , hijo.html-->
+
+
+<!--                        extends                      -->
+
+<!-- Este html es llamado padre ya que será la extructura que heredará otro html llamado hijo mediante el comando extends.
+Este comando debe ir al principio de ese html hijo con el nombre del html padre
+(Revisar hijo.html para ver ejemplo.) -->
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}html padre{% endblock %}</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+        <script src="{{url_for('static', filename='script.js')}}"></script>
+    </head>
+    <body>
+        <main>
+            <!-- Se crean bloques de codigo con un nombre: "header" en este caso inmediato.
+            En estos bloques irá el contenido que será reemplazado por el contenido del HTML hijo que tenga un bloque con el mismo nombre. -->
+            <header>
+            {% block header %}
+            <h1>Este es el HTML padre</h1>
+            {% endblock  %}
+            </header>
+
+            <!-- Si el HTML hijo no define un bloque con el mismo nombre, se muestra el contenido que tenga el bloque en el HTML padre.
+            En este caso, el bloque "content" no esta definido en el HTML hijo, por lo que se mostrará el contenido del HTML padre. -->
+            {% block content %}
+            <p>Este es el contenido del html <b>padre.</b></p>
+            <p>Se muestra este contenido porque <b>no</b> se ha definido un bloque de contenido en el HTML hijo.</p>
+            {% endblock %}
+        </main>
+
+
+<!--                        include                      -->
+                        
+        <!-- Podemos insertar en un HTML cualquier contenido de otro HTML usando el comando include.
+            En este caso, se incluye el contenido de footer.html dentro del bloque footer de este HTML.
+            Esto es util para cuando queremos reutilizar contenido comun para varias paginas. -->
+        <footer>
+            {% include "footer.html" %}
+        </footer>
+    </body>
+</html>

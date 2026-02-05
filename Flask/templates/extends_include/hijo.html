@@ -1,0 +1,13 @@
+<!-- extendemos el html padre llamado "padre.html"
+-->
+{% extends "padre.html" %}
+
+<!-- Todo el contenido de ese html padre sera heredado por este html hijo.
+Sin embargo, los bloques definidos en este html hijo reemplazarán el contenido de los bloques con el mismo nombre en el html padre. -->
+{% block title %}
+HTML Hijo
+{% endblock %}
+
+{% block header %}
+<h1>Este es el HTML hijo</h1>
+{% endblock %}
