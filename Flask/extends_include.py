@@ -11,7 +11,7 @@ En este ejemplo se renderiza el template hijo.html que extiende de padre.html, o
 Para mas informacion revisar los comentarios en los archivos de los templates relacionados listados arriba.
 """
 from flask import Flask, render_template
-app = Flask(__name__, template_folder="templates/extends_input/")
+app = Flask(__name__, template_folder="templates/extends_include/")
 
 @app.route('/')
 def home():
