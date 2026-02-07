@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR 404</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+<body>
+    <header>
+        <h1>ERROR 404</h1>
+    </header>
+    <main>
+        <h2>Pagina no encontrada</h2>
+        <p>Oops, parece ser que la pagina que buscas no existe.</p>
+
+        <!-- Redireccion a la ruta definida para la funcion 'inicio' en errores_html.py -->
+        <a href="{{ url_for('inicio')}}">Volver al inicio</a>
+    </main>
+    <footer>Sitio Flask de prueba :D</footer>
+</body>
+</head>
+</html>
