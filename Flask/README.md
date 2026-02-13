@@ -13,6 +13,7 @@ En carpeta raiz tener:
 - app.py → archivo principal de la aplicación
 - carpeta static → para archivos estaticos (css, js, imagenes)
 - carpeta templates → para archivos html
+- carpeta instance → para configuraciones y bases de datos
 - requirements.txt → archivo con las dependencias del proyecto
 - .gitignore → archivo para ignorar archivos en git
 - README.md → archivo con la documentacion del proyecto
@@ -38,3 +39,6 @@ Asi mismo cada archivo tiene sus propios templates, recomiendo revisarlos a la p
 - metodo_post.py → manejo de POST
 - redirect.py → redirecciones
 - errores_html.py → manejo de errores
+
+## 04_databases
+ - sqlite_setup.py → configuración base de SQLite en Flask
