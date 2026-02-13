@@ -1,0 +1,3 @@
+Instance/ es un lugar para almacenar las bases de datos, archivos de configuración y otros archivos que no deseas que estén en el control de versiones. 
+Flask automáticamente busca esta carpeta para cargar la configuración y otros archivos necesarios para la aplicación. 
+Es importante asegurarse de que esta carpeta esté protegida y no se comparta públicamente, ya que puede contener información sensible.
