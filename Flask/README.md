@@ -42,3 +42,4 @@ Asi mismo cada archivo tiene sus propios templates, recomiendo revisarlos a la p
 
 ## 04_databases
  - sqlite_setup.py → configuración base de SQLite en Flask
+ - crud.py → Creacion de CRUD basico

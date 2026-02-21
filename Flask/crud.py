@@ -1,0 +1,114 @@
+# CRUD describe las 4 operaciones basicas que se realizan sobre datos en una base de datos:
+# Crear(Create), Leer(Read), Actualizar(UPDATE) y Borrar(Delete)
+# En este archivo se realizara la logica para cada una de las operaciones CRUD
+"""
+archivos usados:
+    templates/crud/
+        - base.html
+        - nav_bar.html
+        - new_user.html
+    
+    static/
+        - style.css
+        - script.js
+    
+    instance/
+        - crud.db (Se crea de momento antes de crear un usuario, seria mejor inicializar antes en un init_db.py)
+"""
+
+import sqlite3
+from flask import Flask, render_template, request, g
+
+app = Flask(__name__,template_folder="templates/crud/")
+DATABASE = "Flask/instance/crud.db"
+
+def get_db():
+    if "db" not in g:
+        g.db = sqlite3.connect(DATABASE)
+        g.db.row_factory = sqlite3.Row
+
+    return g.db
+
+@app.teardown_appcontext
+def close_db(exception):
+    db = g.pop("db", None)
+
+    if db is not None:
+        db.close()
+
+# -------------------- CREATE (crear base de datos)--------------------
+def create_table_users():
+    """ CREATE -> Crea la tabla usuarios si no existe """
+
+    #Primero obtenemos la conexion a la base de datos.
+    db = get_db()
+
+    # Luego usamos .execute el cual es un metodo que ejecuta una sola sentencia SQL.
+    db.execute("""CREATE TABLE IF NOT EXISTS users (
+               id INTEGER PRIMARY KEY,
+               nombre TEXT NOT NULL,
+               apellido TEXT NOT NULL,
+               email TEXT NOT NULL UNIQUE,
+               password TEXT NOT NULL);""")
+    
+    # Finalizamos con .commit() el cual es un metodo que guarda los cambios realizados.
+    db.commit()
+
+    # El ciclo de vida de la solicitud termina y se cierra automaticamente la conexion a la db gracias a la funcion close_db().
+
+
+# -------------------- CREATE (crear usuario) --------------------
+
+@app.route('/usuario_creado', methods = ['POST'])
+def post_crear_usuario():
+    create_table_users()
+    db = get_db()
+
+    # Capturamos los datos del formulario para crear un usuario 
+    u_nombre: str = request.form.get("nombre_usuario").capitalize()
+    u_apellido: str = request.form.get("apellido_usuario").capitalize()
+    u_email : str = request.form.get("email_usuario")
+    u_password: str = request.form.get("password_usuario")
+    
+    # Sentencia SQL para agregar los datos del usuario en la DB, si hay conflico de email no hace nada.
+    cursor = db.execute("""INSERT INTO users (nombre, apellido, email, password) VALUES(
+               ?, ?, ?, ?) ON CONFLICT (email) DO NOTHING""",(u_nombre, u_apellido, u_email, u_password))
+    db.commit()
+
+    # Se revisa si se registró un cambio en la DB, si no hubo cambio es porque hubo conflicto con el email (ya existia).
+    if cursor.rowcount == 0:
+        return f"""
+    <h2>Fallo al registrar usuario. El email {u_email} ya se encuentra registrado. </h2>
+    <p>Regresar a la pagina de <a href="/inicio">Inicio</a></p>
+    """
+    else:
+        return f"""
+    <h2>Usuario {u_nombre} {u_apellido} registrado exitosamente.</h2>
+    <p>Regresar a la pagina de <a href="/inicio">Inicio</a></p>
+    """
+
+# -------------------- READ --------------------
+
+
+
+# -------------------- UPDATE --------------------
+
+
+
+# -------------------- DELETE --------------------
+
+
+# -------------------------------------------------------------------------------------
+@app.route('/inicio')
+def page_home():
+    return render_template("base.html")
+
+
+@app.route('/crear/usuario')
+def page_form_create_user():
+    return render_template('new_user.html')
+    
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000, host="0.0.0.0")
