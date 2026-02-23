@@ -7,6 +7,7 @@ archivos usados:
         - base.html
         - nav_bar.html
         - new_user.html
+        - read_users.html
     
     static/
         - style.css
@@ -22,6 +23,7 @@ from flask import Flask, render_template, request, g
 app = Flask(__name__,template_folder="templates/crud/")
 DATABASE = "Flask/instance/crud.db"
 
+# -------------------- Conexion DB --------------------
 def get_db():
     if "db" not in g:
         g.db = sqlite3.connect(DATABASE)
@@ -36,7 +38,7 @@ def close_db(exception):
     if db is not None:
         db.close()
 
-# -------------------- CREATE (crear base de datos)--------------------
+# -------------------- CREATE (tabla usuarios) --------------------
 def create_table_users():
     """ CREATE -> Crea la tabla usuarios si no existe """
 
@@ -44,7 +46,7 @@ def create_table_users():
     db = get_db()
 
     # Luego usamos .execute el cual es un metodo que ejecuta una sola sentencia SQL.
-    db.execute("""CREATE TABLE IF NOT EXISTS users (
+    db.execute("""CREATE TABLE IF NOT EXISTS usuarios (
                id INTEGER PRIMARY KEY,
                nombre TEXT NOT NULL,
                apellido TEXT NOT NULL,
@@ -60,8 +62,8 @@ def create_table_users():
 # -------------------- CREATE (crear usuario) --------------------
 
 @app.route('/usuario_creado', methods = ['POST'])
-def post_crear_usuario():
-    create_table_users()
+def post_create_user():
+
     db = get_db()
 
     # Capturamos los datos del formulario para crear un usuario 
@@ -71,7 +73,7 @@ def post_crear_usuario():
     u_password: str = request.form.get("password_usuario")
     
     # Sentencia SQL para agregar los datos del usuario en la DB, si hay conflico de email no hace nada.
-    cursor = db.execute("""INSERT INTO users (nombre, apellido, email, password) VALUES(
+    cursor = db.execute("""INSERT INTO usuarios (nombre, apellido, email, password) VALUES(
                ?, ?, ?, ?) ON CONFLICT (email) DO NOTHING""",(u_nombre, u_apellido, u_email, u_password))
     db.commit()
 
@@ -87,8 +89,14 @@ def post_crear_usuario():
     <p>Regresar a la pagina de <a href="/inicio">Inicio</a></p>
     """
 
-# -------------------- READ --------------------
+# -------------------- READ (usuarios)--------------------
+def read_users():
 
+    db = get_db()
+    # Ejecutamos la sentencia SQL para el READ del CRUD
+    cursor = db.execute("SELECT id, nombre, apellido, email FROM usuarios")
+    # retornamos toda la respuesta para usarla en la ruta "/leer/usuarios".
+    return cursor.fetchall()
 
 
 # -------------------- UPDATE --------------------
@@ -98,7 +106,12 @@ def post_crear_usuario():
 # -------------------- DELETE --------------------
 
 
+
+
+
 # -------------------------------------------------------------------------------------
+
+# -------------------- RUTAS --------------------
 @app.route('/inicio')
 def page_home():
     return render_template("base.html")
@@ -109,6 +122,13 @@ def page_form_create_user():
     return render_template('new_user.html')
     
 
+@app.route('/leer/usuarios')
+def page_read_users():
+    usuarios = read_users()
+    return render_template('read_users.html', usuarios=usuarios)
 
+
+# -------------------- MAIN --------------------
 if __name__ == "__main__":
+    create_table_users()
     app.run(debug=True, port=5000, host="0.0.0.0")
