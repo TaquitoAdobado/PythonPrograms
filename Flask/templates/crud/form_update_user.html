@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+Update (crUd)
+{% endblock %}
+
+{% block header %}
+Actualizar datos del usuario.
+{% endblock %}
+
+{% block body %}
+<form action="/actualizando/usuario" method="POST">
+    <!-- Campo oculto con correo original del usuario (usado para actualizar datos con SQL)-->
+     <div>
+        <input type="hidden" name="email_actual" value="{{usuario['email']}}">
+     </div>
+
+     <!-- Campos para actualizar -->
+    <div>
+        <label for="nombre_usuario">Nombre:</label>
+        <input type="text" id="nombre_usuario" name="nombre_usuario" value="{{usuario['nombre']}}">
+    </div>
+    <div>
+        <label for="apellido_usuario">Apellido:</label>
+        <input type="text" id="apellido_usuario" name="apellido_usuario" value="{{usuario['apellido']}}">
+    </div>
+    <div>
+        <label for="email_usuario">Email:</label>
+        <input type="email" id="email_usuario" name="email_usuario" value="{{usuario['email']}}">
+    </div>
+    <div>
+        <input type="submit" value="Enviar">
+    </div>
+</form>
+{% endblock %}

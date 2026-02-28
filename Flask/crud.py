@@ -8,13 +8,15 @@ archivos usados:
         - nav_bar.html
         - new_user.html
         - read_users.html
+        - form_user_email.html
+        - form_update_user.html
     
     static/
         - style.css
         - script.js
     
     instance/
-        - crud.db (Se crea de momento antes de crear un usuario, seria mejor inicializar antes en un init_db.py)
+        - crud.db (Se crea al iniciar la app, seria mejor crearlo antes y por separado en un init_db.py)
 """
 
 import sqlite3
@@ -95,14 +97,45 @@ def read_users():
     db = get_db()
     # Ejecutamos la sentencia SQL para el READ del CRUD
     cursor = db.execute("SELECT id, nombre, apellido, email FROM usuarios")
-    # retornamos toda la respuesta para usarla en la ruta "/leer/usuarios".
+    # Retornamos toda la respuesta para usarla en la ruta "/leer/usuarios".
     return cursor.fetchall()
 
 
 # -------------------- UPDATE --------------------
+@app.route('/actualizando/usuario', methods = ['POST'])
+def update_user():
+    db=get_db()
 
+    # Se revisa que valor se captura para decidir si buscar al usuario o actualizarlo con los datos capturados.
+    if not request.form.get("nombre_usuario"):
 
-
+        # *** Captura de email y devolucion de datos del usuario para actualizar ***
+        correo = request.form.get("email_usuario")
+        cursor = db.execute("""SELECT nombre, apellido, email FROM usuarios WHERE email = ?""",(correo,))
+        datos_usuario = cursor.fetchone()
+        # Si la sentencia SQL no devuelve nada, usuario no registrado.
+        if not datos_usuario:
+            return f"""
+            <h2>El email {correo} no se encuentra registrado.</h2>
+            <p>Regresar a la pagina de <a href="/inicio">Inicio</a></p>"""
+        else:
+            return render_template("form_update_user.html", usuario=datos_usuario)
+        
+    else:
+        # *** Captura de datos y actualizacion de usuario ***
+        correo_actual = request.form.get("email_actual")
+        nuevo_nombre = request.form.get("nombre_usuario").capitalize()
+        nuevo_apellido = request.form.get("apellido_usuario").capitalize()
+        nuevo_email = request.form.get("email_usuario")
+        db.execute(""" UPDATE usuarios SET
+                   nombre = ?,
+                   apellido = ?,
+                   email = ?
+                   WHERE email = ?""", (nuevo_nombre, nuevo_apellido, nuevo_email, correo_actual))
+        db.commit()
+        return f"""
+        <h1>Usuario actualizado exitosamente.</h1>
+        <p>Regresar a la pagina de <a href="/inicio">Inicio</a></p>"""
 # -------------------- DELETE --------------------
 
 
@@ -128,7 +161,14 @@ def page_read_users():
     return render_template('read_users.html', usuarios=usuarios)
 
 
+@app.route('/actualizar/usuario')
+def page_update_user():
+    return render_template("form_user_email.html")
+
 # -------------------- MAIN --------------------
 if __name__ == "__main__":
-    create_table_users()
+    #usando with app.app_context(): se asegura de que la base de datos se cree antes de iniciar el servidor
+    with app.app_context():
+        create_table_users()
+    
     app.run(debug=True, port=5000, host="0.0.0.0")

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Update (crUd)
+{% endblock %}
+
+{% block header %}
+Ingrese el email del usuario a actualizar.
+{% endblock %}
+
+{% block body %}
+<form action="/actualizando/usuario" method="POST">
+    <div>
+        <label for="email_usuario">Email:</label>
+        <input type="email" id="email_usuario" name="email_usuario" required>
+    </div>
+    <div>
+        <input type="submit" value="Enviar">
+    </div>
+</form>
+{% endblock %}
