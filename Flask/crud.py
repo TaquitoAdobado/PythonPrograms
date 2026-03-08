@@ -10,6 +10,7 @@ archivos usados:
         - read_users.html
         - form_user_email.html
         - form_update_user.html
+        - form_delete_user.html
     
     static/
         - style.css
@@ -78,6 +79,8 @@ def post_create_user():
     cursor = db.execute("""INSERT INTO usuarios (nombre, apellido, email, password) VALUES(
                ?, ?, ?, ?) ON CONFLICT (email) DO NOTHING""",(u_nombre, u_apellido, u_email, u_password))
     db.commit()
+        #La contrasena guardada de esta forma no es una practica segura, para este caso que no es produccion se dejara asi.
+
 
     # Se revisa si se registró un cambio en la DB, si no hubo cambio es porque hubo conflicto con el email (ya existia).
     if cursor.rowcount == 0:
@@ -101,28 +104,35 @@ def read_users():
     return cursor.fetchall()
 
 
-# -------------------- UPDATE --------------------
-# Paso 1/2: buscar al usuario
+# Busqueda de usuario por email para actualizar o eliminar.
 @app.route('/buscando/usuario', methods = ['POST'])
 def find_user():
     db=get_db()
 
-    # Captura de email y devolucion de datos del usuario para actualizar
+    # Captura de email
     correo = request.form.get("email_usuario")
+    # Captura de accion (actualizar o eliminar)
+    action = request.form.get("action")
 
+    #Busqueda de datos del usuario
     cursor = db.execute("""SELECT nombre, apellido, email FROM usuarios WHERE email = ?""",(correo,))
     datos_usuario = cursor.fetchone()
 
-    # Si la sentencia SQL no devuelve nada, usuario no registrado.
+    # Usuario no existe
     if not datos_usuario:
         return f"""
         <h2>El email {correo} no se encuentra registrado.</h2>
         <p>Regresar a la pagina de <a href="/inicio">Inicio</a></p>"""
-    else:
-        return render_template("form_update_user.html", usuario=datos_usuario)
+    
+    # Actualizacion o eliminacion
+    if action == "actualizar":
+        return render_template("form_update_user.html", usuario = datos_usuario)
+
+    elif action == "eliminar":
+        return render_template("form_delete_user.html", usuario = datos_usuario)
         
-# Paso 2/2: actualizar datos del usuario
-@app.route('/actualizando/usuario', methods=['POST'])
+# -------------------- UPDATE --------------------
+@app.route('/usuario/actualizado', methods=['POST'])
 def update_user():
     db = get_db()
 
@@ -144,14 +154,19 @@ def update_user():
 
 
 # -------------------- DELETE --------------------
-
-
-
+@app.route('/usuario/eliminado', methods=['POST'])
+def delete_user():
+    email = request.form.get("email_usuario")
+    db = get_db()
+    db.execute("""DELETE FROM usuarios WHERE email = ?""", (email,))
+    db.commit()
+    return f"""<h1>Usuario eliminado exitosamente.</h1>
+    <p>Regresar a la pagina de <a href="/inicio">Inicio</a></p>"""
 
 
 # -------------------------------------------------------------------------------------
 
-# -------------------- RUTAS --------------------
+# -------------------- RUTAS barra de navegacion --------------------
 @app.route('/inicio')
 def page_home():
     return render_template("base.html")
@@ -170,7 +185,12 @@ def page_read_users():
 
 @app.route('/actualizar/usuario')
 def page_update_user():
-    return render_template("form_user_email.html")
+    return render_template("form_user_email.html", action="actualizar", title="Update (crUd)")
+
+
+@app.route('/eliminar/usuario')
+def page_delete_user():
+    return render_template("form_user_email.html", action="eliminar", title="Delete (cruD)")
 
 # -------------------- MAIN --------------------
 if __name__ == "__main__":

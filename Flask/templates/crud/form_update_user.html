@@ -9,7 +9,7 @@ Actualizar datos del usuario.
 {% endblock %}
 
 {% block body %}
-<form action="/actualizando/usuario" method="POST">
+<form action="/usuario/actualizado" method="POST">
     <!-- Campo oculto con correo original del usuario (usado para actualizar datos con SQL)-->
      <div>
         <input type="hidden" name="email_actual" value="{{usuario['email']}}">
