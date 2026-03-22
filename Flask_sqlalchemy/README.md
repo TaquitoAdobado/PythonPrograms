@@ -3,22 +3,25 @@
 Este repositorio no es un proyecto en producción, sino un conjunto de **notas personales** para aprender cómo estructurar una aplicación Flask con SQLAlchemy y SQLite.
 La idea es documentar cada paso, cada archivo y cada concepto para tener una referencia clara en el futuro.
 
+
 ## Estructura actual
 
 flask_sqlalchemy/
+|
+|- app.py               # Archivo principal de la aplicación Flask
+|- extensions.py        # Centraliza las extensiones (ej. SQLAlchemy)
+|- models/              # Carpeta que contiene los modelos de la base de datos
+│   │- __init__.py      # Importa y centraliza los modelos
+│   │- user.py          # Modelo User con sus columnas y métodos
 │
-├── app.py               # Archivo principal de la aplicación Flask
-├── extensions.py        # Centraliza las extensiones (ej. SQLAlchemy)
-├── models/              # Carpeta que contiene los modelos de la base de datos
-│   ├── __init__.py      # Importa y centraliza los modelos
-│   └── user.py          # Modelo User con sus columnas y métodos
-├── instance/            # Carpeta donde se guarda la base de datos SQLite
-│   └── database.db      # Archivo físico de la base de datos (se crea aquí)
-├── static/              # Archivos estáticos (CSS, JS, imágenes)
-├── templates/           # Plantillas HTML renderizadas por Flask
-├── requirements.txt     # Dependencias del proyecto
-├── README.md            # Notas de aprendizaje y documentación
-└── .gitignore           # Exclusiones (venv, __pycache__, *.db, etc.)
+│- instance/            # Carpeta donde se guarda la base de datos SQLite
+│   │- database.db      # Archivo físico de la base de datos (se crea aquí)
+│
+│- static/              # Archivos estáticos (CSS, JS, imágenes)
+│- templates/           # Plantillas HTML renderizadas por Flask
+│- requirements.txt     # Dependencias del proyecto
+│- README.md            # Notas de aprendizaje y documentación
+│- .gitignore           # Exclusiones (venv, __pycache__, *.db, etc.)
 
 
 ## Pasos documentados
