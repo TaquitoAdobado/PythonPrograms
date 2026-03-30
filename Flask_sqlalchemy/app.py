@@ -1,13 +1,14 @@
-from flask import Flask
+from flask import Flask, jsonify, render_template, request
 from extensions import db
 from models import User
 from pathlib import Path
-
+from sqlalchemy.exc import IntegrityError
 
 # 1. Se crea la instancia de Flask
 app = Flask(
     __name__,
-    instance_path= Path(__file__).parent / 'instance')
+    instance_path= Path(__file__).parent / 'instance',
+    template_folder= Path(__file__).parent / 'templates')
 
 # Ruta absoluta hacia la base de datos dentro de "instance"
 db_path = app.instance_path / 'database.db'
@@ -47,3 +48,47 @@ with app.app_context():
 - app_context es como un “entorno” que le dice a Flask: usa esta instancia de app para todo lo que hagas ahora.
 - Sin ese contexto, db.create_all() no sabe a qué aplicación ni a qué base de datos conectarse.
 '''
+
+# 6. Creamos las rutas
+
+def get_users():
+    users = User.query.all() # SELECT * FROM users
+    return users
+
+
+@app.route('/usuario_creado', methods=['POST'])
+def create_user():
+    first_name = request.form.get("user_first_name").capitalize()
+    last_name = request.form.get("user_last_name").capitalize()
+    age = request.form.get("user_age")
+    email = request.form.get("user_email")
+
+    user = User(first_name=first_name, last_name=last_name, age=age, email=email)
+    db.session.add(user) # Se marca el objeto a insertar
+    try:
+        db.session.commit() # Se realiza el INSERT INTO en la DB
+        return f"""<p>Usuario {user.first_name} {user.last_name} creado exitosamente.</p>
+        <p>Regresar a <a href="/inicio">Inicio</a></p>"""
+    
+    except IntegrityError: # Si hay un error de integridad (email duplicado). El email esta marcado como UNIQUE
+        db.session.rollback
+        return f"""<p>El email {user.email} ya se encuentra registrado.</p>
+        <p>Regresar a <a href="/inicio">Inicio</a></p>"""
+
+@app.route('/inicio')
+def home_page():
+    return render_template("base.html")
+                           
+
+@app.route('/crear/usuario')
+def add_user_page():
+    return render_template("new_user.html")
+
+@app.route('/leer/usuarios')
+def read_users_page():
+    users_data = get_users()
+    return render_template("read_users.html", users=users_data)
+
+# 7. Ejecutamos la app
+if __name__ == '__main__':
+    app.run(debug=True, port = 5000, host = '0.0.0.0')
