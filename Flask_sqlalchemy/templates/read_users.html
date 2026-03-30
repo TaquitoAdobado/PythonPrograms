@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+READ (cRud)
+{% endblock %}
+
+{% block header %}
+<h1>Lista de usuarios registrados.</h1>
+{% endblock %}
+
+{% block body %}
+<table>
+    <tr>
+        <th>ID</th><th>Nombre</th><th>Apellido</th><th>Edad</th><th>Email</th>
+    </tr>
+{% for user in users %}
+    <tr>
+        <td>{{user["id"]}}</td>
+        <td>{{user["first_name"]}}</td>
+        <td>{{user["last_name"]}}</td>
+        <td>{{user["age"]}}</td>
+        <td>{{user["email"]}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
