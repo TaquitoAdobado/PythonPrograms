@@ -51,11 +51,13 @@ with app.app_context():
 
 # 6. Creamos las rutas
 
+# -------------------- READ --------------------
 def get_users():
     users = User.query.all() # SELECT * FROM users
     return users
 
 
+# -------------------- CREATE --------------------
 @app.route('/usuario_creado', methods=['POST'])
 def create_user():
     first_name = request.form.get("user_first_name").capitalize()
@@ -65,16 +67,67 @@ def create_user():
 
     user = User(first_name=first_name, last_name=last_name, age=age, email=email)
     db.session.add(user) # Se marca el objeto a insertar
+    return commit_rollback(user, f"Usuario {user.first_name} {user.last_name} creado exitosamente.")
+
+
+# -------------------- FILTER FOR UPDATE OR DELETE --------------------
+@app.route('/buscando/usuario', methods=['POST'])
+def find_user():
+    user_email = request.form.get("email_usuario")
+    action = request.form.get("action") # action = actualizar o eliminar
+    user = User.query.filter_by(email=user_email).first() # SELECT * FROM users WHERE email = ?
+
+    if not user:
+        return f"""<h2>El email {user_email} no se encuentra registrado.</h2>
+        <p>Regresar a la pagina de <a href="/inicio">Inicio</a></p>"""
+    
+    if action == "actualizar":
+        return render_template("form_update_user.html", user=user)
+
+    elif action == "eliminar":
+        pass
+        # return render_template("form_delete_user.html", user=user)
+
+
+# -------------------- UPDATE --------------------
+@app.route('/usuario/actualizado', methods=['POST'])
+def update_user():
+    user_email = request.form.get("email_actual")
+    new_first_name = request.form.get("nombre_usuario").capitalize()
+    new_last_name = request.form.get("apellido_usuario").capitalize()
+    new_age = request.form.get("edad_usuario")
+    new_email = request.form.get("email_usuario")
+
+    user = User.query.filter_by(email=user_email).first()
+    user.first_name = new_first_name
+    user.last_name = new_last_name
+    user.age = new_age
+    user.email = new_email
+
+    return commit_rollback(user, f"Usuario {user.first_name} {user.last_name} actualizado exitosamente.")
+
+
+#-------------------- Funcion auxiliar --------------------
+def commit_rollback(user,success_message):
+    ''' 
+    Funcion auxiliar que realiza commit y rollback en caso de error. Por ahora solo maneja IntegrityError
+    por email duplicado.
+    Parametros:
+        user: Objeto User
+        success_message: Mensaje de confirmacion
+    '''
     try:
-        db.session.commit() # Se realiza el INSERT INTO en la DB
-        return f"""<p>Usuario {user.first_name} {user.last_name} creado exitosamente.</p>
+        db.session.commit() # Se ejecuta sentencia SQL
+        return f"""<p>{success_message}</p>
         <p>Regresar a <a href="/inicio">Inicio</a></p>"""
     
     except IntegrityError: # Si hay un error de integridad (email duplicado). El email esta marcado como UNIQUE
-        db.session.rollback
-        return f"""<p>El email {user.email} ya se encuentra registrado.</p>
+        db.session.rollback()
+        return f"""<p>Error: El email {user.email} ya se encuentra registrado.</p>
         <p>Regresar a <a href="/inicio">Inicio</a></p>"""
 
+
+# -------------------- PAGINAS --------------------
 @app.route('/inicio')
 def home_page():
     return render_template("base.html")
@@ -88,6 +141,10 @@ def add_user_page():
 def read_users_page():
     users_data = get_users()
     return render_template("read_users.html", users=users_data)
+
+@app.route('/actualizar/usuario')
+def update_user_page():
+    return render_template("form_user_email.html", action="actualizar", title="Update (crUd)")
 
 # 7. Ejecutamos la app
 if __name__ == '__main__':
