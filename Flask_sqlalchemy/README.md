@@ -53,3 +53,13 @@ flask_sqlalchemy/
 4. **Validación inicial**  
    - Confirmar que el archivo `database.db` existe en la carpeta `instance`.  
    - Verificar que la tabla `users` fue creada correctamente.
+
+5. **Creación de rutas y templates**
+   - Se agregan las rutas que renderizarán los templates.
+      En este caso se agregaron rutas para realizar un CRUD usando el ORM SQLAlchemy.
+
+6. **Inicialización de la app**
+   - Se inicializa el servidor mediante app.run y sus parámetros necesarios (port, host, debug).
+       ```python
+       app.run(debug=True, port=5000, host='0.0.0.0') # Parámetros de acuerdo a necesidades propias
+       ```
