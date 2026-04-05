@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+Delete(cruD)
+{% endblock %}
+
+{% block header %}
+Usuario a Eliminar.
+{% endblock %}
+
+{% block body %}
+<form action="/usuario/eliminado" method="POST">
+
+    <!-- Campo oculto con correo del usuario (usado para eliminar al usuario)-->
+     <div>
+        <input type="hidden" name="email_usuario" value="{{user.email}}">
+     </div>
+
+     <!-- Datos del usuario a borrar (los campos disabled no envian datos al servidor.) -->
+    <div>
+        <label for="nombre_usuario">Nombre:</label>
+        <input type="text" id="nombre_usuario" name="nombre_usuario" value="{{user.first_name}}" disabled>
+    </div>
+    <div>
+        <label for="apellido_usuario">Apellido:</label>
+        <input type="text" id="apellido_usuario" name="apellido_usuario" value="{{user.last_name}}" disabled>
+    </div>
+    <div>
+        <label for="email_usuario">Email:</label>
+        <input type="email" id="email_usuario" name="email_usuario" value="{{user.email}}" disabled>
+    </div>
+    <div>
+        <label for="edad_usuario">Edad:</label>
+        <input type="number" id="edad_usuario" name="edad_usuario" value="{{user.age}}" disabled>
+    </div>
+    <div>
+        <input type="submit" value="Eliminar">
+    </div>
+</form>
+{% endblock %}

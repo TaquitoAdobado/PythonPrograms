@@ -85,7 +85,7 @@ def find_user():
         return render_template("form_update_user.html", user=user)
 
     elif action == "eliminar":
-        pass
+        return render_template("form_delete_user.html", user=user)
         # return render_template("form_delete_user.html", user=user)
 
 
@@ -107,6 +107,16 @@ def update_user():
     return commit_rollback(user, f"Usuario {user.first_name} {user.last_name} actualizado exitosamente.")
 
 
+# -------------------- DELETE --------------------
+@app.route('/usuario/eliminado', methods=['POST'])
+def delete_user():
+    user_email = request.form.get("email_usuario")
+    user = User.query.filter_by(email=user_email).first()
+    db.session.delete(user)
+    return commit_rollback(user, "Usuario eliminado exitosamente.")
+
+
+
 #-------------------- Funcion auxiliar --------------------
 def commit_rollback(user,success_message):
     ''' 
@@ -118,12 +128,12 @@ def commit_rollback(user,success_message):
     '''
     try:
         db.session.commit() # Se ejecuta sentencia SQL
-        return f"""<p>{success_message}</p>
+        return f"""<h2>{success_message}</h2>
         <p>Regresar a <a href="/inicio">Inicio</a></p>"""
     
     except IntegrityError: # Si hay un error de integridad (email duplicado). El email esta marcado como UNIQUE
         db.session.rollback()
-        return f"""<p>Error: El email {user.email} ya se encuentra registrado.</p>
+        return f"""<h2>Error: El email {user.email} ya se encuentra registrado.</h2>
         <p>Regresar a <a href="/inicio">Inicio</a></p>"""
 
 
@@ -145,6 +155,12 @@ def read_users_page():
 @app.route('/actualizar/usuario')
 def update_user_page():
     return render_template("form_user_email.html", action="actualizar", title="Update (crUd)")
+
+
+@app.route('/eliminar/usuario')
+def delete_user_page():
+    return render_template("form_user_email.html", action="eliminar", title="Delete (cruD)")
+
 
 # 7. Ejecutamos la app
 if __name__ == '__main__':
