@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</head>
+
+<body>
+    <!-- Bloque messages para mostrar los mensajes Flash -->
+
+    {% with messages = get_flashed_messages(with_categories=True) %} <!-- recupera los mensajes -->
+        {% if messages %}                                            <!-- revisa si hay mensajes -->
+            {% for cattegory, message in messages %}                 <!-- recorre los mensajes -->
+            <div class ="alert-{{cattegory}}">                       <!-- clase para darle estilo en CSS -->
+            <p>{{cattegory}}: {{ message }}</p>                      <!-- muestra los mensajes -->
+            </div>                              
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <h1>Flash Message</h1>
+    <p>Se está mostrando un mensaje flash hasta arriba :O</p>
+</body>
+</html>
