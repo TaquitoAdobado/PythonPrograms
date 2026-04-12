@@ -1,3 +1,8 @@
+'''
+Archivo usado:
+flash_messages.html
+'''
+
 # Flash es un contenedor de mensajes que se muestran en la parte superior de la pagina.
 # Para usar flash debemos importar el modulo flash de flask
 from flask import Flask, render_template,flash

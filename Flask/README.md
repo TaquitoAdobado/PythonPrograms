@@ -40,6 +40,9 @@ Asi mismo cada archivo tiene sus propios templates, recomiendo revisarlos a la p
 - redirect.py → redirecciones
 - errores_html.py → manejo de errores
 
-## 04_databases
+## 04_flash
+- flash_messages.py → Uso de mensajes flash
+
+## 05_databases
  - sqlite_setup.py → configuración base de SQLite en Flask
  - crud.py → Creacion de CRUD basico
