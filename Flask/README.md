@@ -49,4 +49,4 @@ Asi mismo cada archivo tiene sus propios templates, recomiendo revisarlos a la p
  - Flask_sqlalchemy/README.md → Flask con ORM SQLAlchemy para consultas mas limpias. Se separa en carpeta aparte para no combinar archivos ni librerias, vease como una rama alternativa entre usar sqlite3 y el ORM SQLAlchemy para consultas sin instrucciones SQL.
 
 ## 06_Autenticación y sesiones.
-- hash_passwords.py → Uso de Hash con werkzeug.security usando generate_password_hash y check_password_hash
+- hash_passwords.py → Uso de Hash con werkzeug.security usando generate_password_hash y check_password_hash.

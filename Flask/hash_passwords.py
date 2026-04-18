@@ -35,11 +35,3 @@ print(f"Contraseña coincide con '{password}'?: \n {check_password_hash(hashed_p
 print(f"Contraseña coincide con 'OtraContrasena123'?: \n {check_password_hash(hashed_password, 'OtraContrasena123')}")
 
 print(f"Si 2 contraseñas son iguales, sus hash son iguales tambien?: \n {hashed_password == hashed_password_2}")
-
-
-
-
-
-
-
-
