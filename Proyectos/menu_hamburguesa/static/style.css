@@ -1,0 +1,61 @@
+*{
+    margin: 10px;
+    padding: 0;   /*reseteo los margenes por defecto */
+    box-sizing: border-box;
+}
+
+
+button{
+    margin: 0;
+    width: 25px;
+    height: 30px;
+    position: absolute;
+    top: 50px;
+    left: 0;     
+    cursor: pointer;
+    border: none;
+    background-color: green
+        
+}
+
+span{
+    margin: 0;
+    background-color: black;  /* Color de las lineas */
+    width: 100%;                /* Ancho del contenido (las lineas) */
+    height: 10%;                /* Alto del contenido (las lineas) */
+    border-radius: 10px;         /* Bordes redondeados */
+    display: block;             /* Mostrar el contenido como bloque para que se pueda centrar */
+
+    position: absolute;         /* Posicionamiento absoluto para que se posicione sobre el boton (que tiene posicionamiento relativo) */
+    top: 50%;                   /* Centrado vertical del punto donde empiezan las lineas */
+    left: 50%;                  /* Centrado horizontal del punto donde empiezan las lineas */
+    transform: translate(-50%, -50%); /* Centrado horizontal y vertical de las lineas (recorremos hacia atras la mitad de las lineas) */
+    transition: transform 0.5s, width 0.5s;  /* Duracion de la animacion de transform y width en las lineas */          
+
+}
+/* Posicion de las lineas cuando no estan activas */
+
+.l1{
+transform: translate(-50%, -300%);
+}
+
+.l2{
+transform: translate(-50%, -50%);
+}
+
+.l3{
+transform: translate(-50%, 200%);
+} 
+
+/* Posicion de las lineas cuando estan activas formando una X*/
+.l1.active{
+    transform: translate(-50%, -50%) rotate(45deg); /* Centrada y rotada 45% */
+}
+
+.l2.active{
+    width: 0;                                        /* Desaparece el contenido */
+}
+
+.l3.active{
+    transform: translate(-50%, -50%) rotate(-45deg); /* Centrada y rotada -45% */
+}
