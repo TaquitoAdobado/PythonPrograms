@@ -14,6 +14,8 @@ h1#tituloHmb{
     text-align: center;
     color: white;
 }
+
+/*-------------------------------------------------------------------------*/
 /* Boton hamburguesa */
 .hamburguer{
     margin: 0;
@@ -27,23 +29,21 @@ h1#tituloHmb{
     background-color: rgb(189, 123, 0);
     border-radius: 3px;         /* Bordes redondeados */
     z-index: 2;                 /* Posicion de la capa (usamos 2 para que quede por encima del 1 del menu desplegable) */
-        
 }
 
 /* Lineas del boton hamburguesa */
 .hamburguer span{
     margin: 0;
 
-    width: 100%;                /* Ancho del contenido (las lineas) */
-    height: 10%;                /* Alto del contenido (las lineas) */
-    border-radius: 10px;        /* Bordes redondeados */
-    display: block;             /* Mostrar el contenido como bloque para que se pueda centrar */
-    position: absolute;         /* Posicionamiento absoluto para que se posicione sobre el boton (que tiene posicionamiento relativo) */
-    top: 50%;                   /* Centrado vertical del punto donde empiezan las lineas */
-    left: 50%;                  /* Centrado horizontal del punto donde empiezan las lineas */
-    transform: translate(-50%, -50%); /* Centrado horizontal y vertical de las lineas (recorremos hacia atras la mitad de las lineas) */
-    transition: transform 0.5s, width 0.5s;  /* Duracion de la animacion de transform y width en las lineas */          
-
+    width: 100%;                        /* Ancho del contenido (las lineas) */
+    height: 10%;                        /* Alto del contenido (las lineas) */
+    border-radius: 10px;                /* Bordes redondeados */
+    display: block;                     /* Mostrar el contenido como bloque para que se pueda centrar */
+    position: absolute;                 /* Posicionamiento absoluto para que se posicione sobre el boton (que tiene posicionamiento relativo) */
+    top: 50%;                           /* Centrado vertical del punto donde empiezan las lineas */
+    left: 50%;                          /* Centrado horizontal del punto donde empiezan las lineas */
+    transform: translate(-50%, -50%);   /* Centrado horizontal y vertical de las lineas (recorremos hacia atras la mitad de las lineas) */
+    transition: transform .5s;          /* Duracion de la animacion de transform y width en las lineas */          
 }
 
 
@@ -55,7 +55,8 @@ background-color: green;
 
 .hamburguer .l2{
 transform: translate(-50%, -50%);
-background-color: red;
+background-color: rgb(143, 39, 39);
+animation: l2Return .5s ease-in forwards; /* Tipo de animacion y duracion del keyframe L2Return */
 }
 
 .hamburguer .l3{
@@ -64,59 +65,122 @@ background-color: rgb(255, 247, 8);
 } 
 
 
-/* Posicion de las lineas cuando estan activas formando una X */
+/* Posicion de las lineas cuando estan activas (formando una X) */
 .hamburguer .l1.active{
-    transform: translate(-50%, -50%) rotate(45deg); /* Centrada y rotada 45% */
+    transform: translate(-50%, -50%) rotate(45deg);     /* Centrada y rotada 45% */
 }
 
 .l2.active{
-    width: 0;                                        /* Desaparece el contenido */
+    animation: l2active .1s ease forwards;       /*  Activa keyframe L2Active, con duracion y tipo de animacion. */
+}
+@keyframes l2active{                             /* Recorre a la derecha la linea 2 */
+    0% {transform: translate(-50%, -50%);}
+    100% {transform: translate(150%, -50%);}
+}
+@keyframes l2Return{                             /* Recorre a la izquierda la linea 2 */
+    0% {transform: translate(150%, -50%);}       
+    100% {transform: translate(-50%, -50%);}
 }
 
 .hamburguer .l3.active{
-    transform: translate(-50%, -50%) rotate(-45deg); /* Centrada y rotada -45% */
+    transform: translate(-50%, -50%) rotate(-45deg);    /* Centrada y rotada -45% */
 }
 
 
-/* Menu desplegable */
+/*-------------------------------------------------------------------------*/
+/* Menu Hamburguesa (Este menu iniciara como una linea y se abrira como hamburguesa) */
+.hamburguerMenu{
+    margin: 0;
+    top: 113.4px;                           /* Distancia del tope de la pantalla (coincide con linea 2)*/
+    left: 25px;                             /* Distancia del borde izquierdo de la pantalla (coincide con extremo de la linea 2)*/
+    width: 0px;                             /* Ancho del menu incial (0, oculto)*/
+    height: 3px;                            /* Alto del menu incial (el mismo que la linea 2)*/
+    background-color: rgb(143, 39, 39);   /* Color del menu (el mismo que la linea 2)*/
+    z-index: 1;                             /* Posicion de la capa (usamos 1 para que quede por encima del contenido de la pagina(si tiene 0) */
+    position: fixed;                        /* Posicionamiento fijo (si hago scroll se mueve conmigo) */
+    overflow: hidden;                       /* Oculto el contenido que se desborda del menu */
+    border-radius: 10px;
+    animation: collapseHmbMenu .5s ease forwards;   /* Animacion de cierre de menu, duracion y tipo */
+
+}
+
+.hamburguerMenu.active{                             /* Menu activo, inicia animacion expandHmbMenu */
+    animation: expandHmbMenu .5s ease forwards;
+
+}
+
+/* Animaciones del menu desplegable */
+
+@keyframes expandHmbMenu{               /*Animacion de aparicion de menu */
+    0% {width: 0; height: 3px;}             /* 0% linea oculta */
+    40% {width: 175px; height: 3px;}        /* 0 al 40% linea alargada */
+    100% {width: 175px; height: 200px;}     /* 40 al 100% menu completo */
+}
+
+@keyframes collapseHmbMenu{             /* Animacion de cierre de menu */
+    0% {width: 175px; height: 200px;}       /* 0% menu completo */
+    60% {width: 175px; height: 3px;}        /* 0 al 60% alto de menu se reduce a 3px */
+    100% {width: 0; height: 3px;}           /* 60 al 100% se reduce ancho hasta quedar oculto */
+}
+
+/* Elementos del menu desplegable */
+.hamburguerMenu ul{
+    display: flex;                  /* Flex es un modelo de diseño flexible */  
+    flex-direction: column;         /* Columna de elementos */
+    gap: 20px;                      /* Espacio entre los elementos */
+    margin-top: 20px;               /* Espacio entre el tope y el contenido */
+}
+.hamburguerMenu li{
+    color: white;
+    margin: 0;
+    padding: 0px;
+    list-style: none;               /* Quitamos los puntos de la lista */
+    text-align: left;               /* Alineacion izquierda */
+    margin-left: 20px;              /* Espacio entre el borde izquierdo y el texto */
+    cursor: pointer;                /* Cambio de cursor al pasar por encima de cada elemento */
+    font-size: larger;
+}
+
+
+/*-------------------------------------------------------------------------*/
+/* Menu desplegable (Este menu sale del lado izquierdo de la pantalla)
+    Este es un menu aparte, sin embargo como lo hice primero, lo dejo como referencia */
 .offScreenMenu {
     margin: 0;
     left: -200px;                           /* Oculto fuera de la pantalla (ancho negativo del menu) */
-    top: 100px;                             /* Distancia del tope de la pantalla */
-    position: fixed;                        /* Posicionamiento fijo (si hago scroll se queda fijo) */
+    top: 350px;                             /* Distancia del tope de la pantalla */
+    position: fixed;                        /* Posicionamiento fijo (si hago scroll se mueve conmigo) */
     background-color: rgb(189, 123, 0);
     width: 200px;                           /* Ancho del menu */
-    height: 100%;
-    padding-top: 40px;                      /* Espacio entre el tope y el contenido */
+    height: 100%;                           /* Alto del menu (ocupa toda la pantalla)*/
     justify-content: center;
-    text-align: left;
-    font-size: large;
     transition: .5s ease;                   /* Duracion de la animacion de aparicion y desaparicion */
-    z-index: 1;                             /* Posicion de la capa (usamos 1 para que quede por debajo del 2 del boton hamburguesa) */
+    z-index: 1;                             /* Posicion de la capa (usamos 1 para que quede por encima del contenido de la pagina(si tiene 0) */
     border-radius: 10px;                    /* Bordes redondeados */
 
 
 }
 
-
-/* Contenido del menu desplegable */
-.offScreenMenu ul{
-    color: white;                           /* Color del texto */
-
-}
-
-/* Menu desplegable activo (cuando aparece) */
+/* Menu desplegable activo*/
 .offScreenMenu.active {
     left: 0;            /* Aparece (pegado al borde izquierdo) */
     }
 
 /* Elementos del menu desplegable */
+.offScreenMenu ul{
+    display: flex;                  /* Flex es un modelo de diseño flexible */  
+    flex-direction: column;         /* Columna de elementos */
+    gap: 20px;                      /* Espacio entre los elementos */
+    margin-top: 20px;               /* Espacio entre el tope y el contenido */
+}
+
 .offScreenMenu li{
+    color: white;
     margin: 0;
     padding: 0;
     list-style: none;               /* Quitamos los puntos de la lista */
     text-align: left;               /* Alineacion izquierda */
-    margin-bottom: 20px;            /* Espacio entre elementos */
     margin-left: 20px;              /* Espacio entre el borde izquierdo y el texto */
     cursor: pointer;                /* Cambio de cursor al pasar por encima de cada elemento */
+    font-size: larger;
 }
