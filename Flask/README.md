@@ -50,3 +50,4 @@ Asi mismo cada archivo tiene sus propios templates, recomiendo revisarlos a la p
 
 ## 06_Autenticación y sesiones.
 - hash_passwords.py → Uso de Hash con werkzeug.security usando generate_password_hash y check_password_hash.
+- sign_in.py → Registro de sesion con Flask, sqlite3 y werkzeug.security.
