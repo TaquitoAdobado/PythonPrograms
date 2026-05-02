@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=devive-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script src="{{url_for('static', filename='script.js')}}" defer></script>
+</head>
+<body>
+    <header>
+        <h1 class="Title">Registro</h1>
+    </header>
+    <form action="/registro" method="POST">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" placeholder="example@example.com" required>
+        </div>
+
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" minlength="5" maxlength="20" required>
+        </div>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" minlength="8" maxlength="20" autocomplete="new-password" placeholder="********" required>
+        </div>
+
+        <div>
+            <input type="submit" value="Sign In">
+        </div>
+    </form>
+</body>
+</html>
