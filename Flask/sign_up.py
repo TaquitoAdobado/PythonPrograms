@@ -1,7 +1,7 @@
 # En este script se muestra como realizar un registro de usuario con werkzeug.security mediante un formulario HTML.
 """ Archivos utilizados:
-sign_in.html
-signin_home.html
+sign_up.html
+signup_home.html
 ...
 """
 # Importamos las librerias necesarias
@@ -46,7 +46,7 @@ def read_users():
 @app.route('/registro', methods=['GET', 'POST'])
 def signin_page():
     if request.method == 'GET':
-        return render_template('sign_in.html')
+        return render_template('sign_up.html')
     
     username = request.form.get('username')
     email = request.form.get('email')
@@ -69,7 +69,7 @@ def signin_page():
 
 @app.route('/inicio')
 def home_page():
-    return render_template("signin_home.html")
+    return render_template("signup_home.html")
 
 @app.route('/leer')
 def page_read_users():
