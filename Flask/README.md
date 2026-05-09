@@ -53,3 +53,6 @@ Asi mismo cada archivo tiene sus propios templates, recomiendo revisarlos a la p
 - sign_up.py → Registro de sesion con Flask, sqlite3 y werkzeug.security.
 - session.py → Uso de session para manejo de sesiones seguras.
 - restriccion_de_rutas.py → Restriccion de rutas con decoradores.
+
+## 07_APIS.
+- endpoint_JSON.py → Crear enpoints JSON con jsonify.
