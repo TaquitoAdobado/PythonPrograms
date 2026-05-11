@@ -56,3 +56,4 @@ Asi mismo cada archivo tiene sus propios templates, recomiendo revisarlos a la p
 
 ## 07_APIS.
 - endpoint_JSON.py → Crear enpoints JSON con jsonify.
+- crud_appi.py → CRUD via API (GET, POST, PUT, DELETE) utilizando endpoints REST.
