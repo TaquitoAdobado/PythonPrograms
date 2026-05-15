@@ -58,3 +58,4 @@ Asi mismo cada archivo tiene sus propios templates, recomiendo revisarlos a la p
 - endpoint_JSON.py → Crear enpoints JSON con jsonify.
 - crud_api.py → CRUD via API (GET, POST, PUT, PATCH, DELETE) utilizando endpoints REST.
 - crud_api_marshmallow.py → CRUD via API REST usando esquemas Marshmallow.
+- consumir_api.py → Consumo de APIs usando libreria requests.
