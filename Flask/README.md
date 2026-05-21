@@ -60,5 +60,31 @@ Asi mismo cada archivo tiene sus propios templates, recomiendo revisarlos a la p
 - crud_api_marshmallow.py → CRUD via API REST usando esquemas Marshmallow.
 - consumir_api.py → Consumo de APIs usando libreria requests.
 
-## 08 Blueprints
+## 08 Blueprints y  modularización
 - blueprint.py / routes/blueprint_page.py → Separar rutas en diferentes archivos usando Blueprint.
+- config.py / app.py → Separar logica de configuraciones y leer claves desde .env
+
+## Estructura avanzada de un proyecto Flask
+
+project/
+│── app.py                  # Punto de entrada: instancia Flask y registro de Blueprints
+│── config.py               # Configuración global (Dev, Test, Prod)
+│── .env                    # Variables sensibles (SECRET_KEY, claves API, DB URL)
+│── instance/               # Datos locales (Bases de datos)
+│   └── app.db
+│── routes/                 # Endpoints
+│   ├── home.py                 # Rutas que renderizan templates HTML
+│   ├── weather.py              # Rutas que revuelven JSON
+│── services/               # Lógica de negocio / APIs externas
+│   ├── weather_service.py      # Consumo de APIs externas
+│
+│── models/                 # Datos / ORM / esquemas Marshmallow
+│   ├── user.py             # Modelo de usuario
+│── templates/              # HTML con Jinja2
+│   ├── index.html
+│── static/                 # Archivos estáticos (CSS, JS, imágenes)
+│   ├── style.css
+│   ├── script.js
+│── tests/                  # Pruebas unitarias
+│   ├── test_users.py
+│   ├── test_weather.py
