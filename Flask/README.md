@@ -60,9 +60,13 @@ Asi mismo cada archivo tiene sus propios templates, recomiendo revisarlos a la p
 - crud_api_marshmallow.py → CRUD via API REST usando esquemas Marshmallow.
 - consumir_api.py → Consumo de APIs usando libreria requests.
 
-## 08 Blueprints y  modularización
+## 08 Blueprints y modularización.
 - blueprint.py / routes/blueprint_page.py → Separar rutas en diferentes archivos usando Blueprint.
 - config.py / app.py → Separar logica de configuraciones y leer claves desde .env
+
+## 09 Testing con Pytest.
+- tests/ -> Carpeta contenedora de pruebas unitarias y funcionales
+- conftest.py / test_home.py -> Prueba unitaria de endpoint mediante simulacion de request usando pytest y app.test_client().
 
 ## Estructura avanzada de un proyecto Flask
 
@@ -86,5 +90,5 @@ project/
 │   ├── style.css
 │   ├── script.js
 │── tests/                  # Pruebas unitarias
-│   ├── test_users.py
-│   ├── test_weather.py
+│   ├── test_home.py
+│   ├── conftest.py
